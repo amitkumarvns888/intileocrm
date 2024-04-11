@@ -1,0 +1,203 @@
+
+/* ************************************ruchi style *********************************/
+
+* {
+  font-family: "Public Sans", sans-serif;
+  font-optical-sizing: auto;
+  /* font-weight: <weight>; */
+  font-style: normal;
+}
+
+.ant-table-thead .ant-table-cell {
+  background-color: #fff !important;
+}
+
+.font16px {
+  font-size: 16px;
+}
+
+.font14px {
+  font-size: 14px;
+}
+
+.font30px {
+  font-size: 30px;
+}
+
+.font12px {
+  font-size: 12px;
+}
+
+.textblue {
+  color: #1890ff;
+}
+
+.textgrey {
+  color: #8c8c8c;
+}
+
+.textblackfigma {
+  color: #262626;
+}
+
+.bgActiveLightblue {
+  background-color: #e6f7ff !important;
+}
+
+.bgBlue {
+  background-color: #1890ff !important;
+}
+
+.fontweight500 {
+  font-weight: 500;
+}
+
+.bordergrey {
+  border: 1px solid #d9d9d9;
+}
+
+.textareaph::placeholder {
+  font-size: 14px;
+  color: #bfbfbf;
+}
+
+
+
+
+
+/* ************************* side bar style start****************************************  */
+
+.font30{
+  font-size: 30px;
+  color: black;
+  font-weight: 300;
+  margin-top: -5px;
+}
+.font14{
+  font-size: 14px;
+  color: #282c34;
+
+}
+.sidebarimg{
+  margin-right: 10px;
+}
+.bootcardclass{
+  width: 800px;
+  height: 300px;
+}
+.profilename{
+  font-size: 16px;
+  font-weight: 600;
+  margin-top: -50px;
+  margin-left: -20px;
+
+}
+.profileimgright{
+  margin: 10px 10px;
+  
+}
+.heading2{
+  font-family: "Public Sans", sans-serif;
+  font-size: 30px;
+}
+.dashbhrline{
+  width: 1100px;
+}
+.cardingbootstr{
+  width: 288px;
+  height: 13px;
+}
+.strongh1{
+  font-size: 16px;
+  
+}
+.cardintext{
+  font-size: 14px;
+}
+/* card parent style */
+.cardname{
+  height: 250px;
+}
+
+/* bootstrap card style */
+.campaignbutton{
+  width: 160px;
+  font-size: 14px;
+  position: relative;
+  top: -10px;
+}
+.textpribtn{
+  margin-top: -20px;
+}
+.textt{
+  text-align: justify;
+}
+strong{
+  font-size: 16px;
+}
+.cardparaa{
+  font-size: 14px;
+}
+
+
+/* sender style */
+.font14span{
+  font-size: 16px;
+  margin-left: 13px;
+  font-weight: bold;
+  
+}
+.font14p{
+  font-size: 14px;
+  margin-left: 50px;
+  color: #8C8C8C;
+}
+.backsidecolor{
+  background-color: #BAE7FF;
+  /* width: 200px;
+  height: 200px; */
+  padding: 8px;
+  border-radius: 50%;
+}
+.addsenderbtn{
+ position: absolute;
+ right: -540px;
+ top: 30px;
+}
+.formcontrolclass{
+  width: 350px;
+}
+/* verify new sender style */
+
+.verifyinputsender{
+  width: 400px;
+  font-weight: lighter;
+}
+.lineheightclass{
+line-height: 10px;
+}
+.inputcls{
+  border-radius: 5px;
+  padding-left: 4px;
+}
+.btnverify{
+  margin-left: 10px;
+  margin-top: 15px;
+}
+
+/* bootstrap card class */
+.boxclass{
+  width: 28px;
+  height: 163px;
+  border: 1px solid black;
+}
+.cardadjust{
+  margin-left: -70px;
+}
+
+
+
+
+
+
+
