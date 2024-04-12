@@ -3,6 +3,7 @@ import ImageCompo from './ImageCompo'
 import { Form, Button } from 'react-bootstrap';
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
+import {questionFormUrl1,getFetchQuestionUrl} from '../Config'
 
 const QuestionForm1 = () => {
     const navigate=useNavigate()
@@ -15,7 +16,7 @@ const QuestionForm1 = () => {
     }, []);
     const fetchData = async () => {
         try {
-            const response = await axios.get('https://intileo-tech.info/api/admin/question/index');
+            const response = await axios.get(`${questionFormUrl1}`);
             console.log(response.data.data.questions)
             setFormData1(response.data.data.questions);
             console.log(formdata1[0]?.id)
@@ -30,7 +31,7 @@ const QuestionForm1 = () => {
 
     const fetchquestion = async () => {
         try {
-            const response1 = await axios.get('https://intileo-tech.info/api/user/question/get-user-question');
+            const response1 = await axios.get(`${getFetchQuestionUrl}`);
             console.log(response1.data.data.questions)
             setQuestion1(response1.data.data.questions);
             console.log(response1)
@@ -38,7 +39,7 @@ const QuestionForm1 = () => {
 
             
             if (response1.status === 200) {
-                navigate('/onboardquestion2');
+                navigate('/onboardQuestion2');
             } else {
                 console.error('Unexpected response status:', response1.status);
             }
@@ -63,7 +64,7 @@ const QuestionForm1 = () => {
                 <ImageCompo />
             </div>
             <div className="container">
-                <div className="row">
+                <div className="row d-flex justify-content-center align-items-center" style={{ height: '90vh' }}>
                     <div className="col-md-12  form1col">
                         <Form onSubmit={submitform1}>
 

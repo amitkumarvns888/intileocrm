@@ -1,7 +1,7 @@
-import React, { useState ,useEffect} from 'react'
+import React, { useState, useEffect } from 'react'
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import {toast} from 'react-toastify';
+import { toast } from 'react-toastify';
 import { Table, Form, Input, } from 'antd';
 import { Button, Col, DatePicker, Drawer, Row, Select, Space } from 'antd';
 import { CloseCircleOutlined } from "@ant-design/icons";
@@ -21,7 +21,7 @@ const { Option } = Select;
 const columns = [
     {
         title: 'Id',
-        dataIndex: 'name',
+        dataIndex: 'id',
         filters: [
             {
                 text: 'Joe',
@@ -44,12 +44,15 @@ const columns = [
     },
     {
         title: 'Contact Name',
-        dataIndex: 'age',
+        dataIndex: 'first_name',
+        render: (text, record) => (
+            <span className="text-capitalize font16px">{record.first_name} {record.last_name}</span>
+        ),
         sorter: (a, b) => a.age - b.age,
     },
     {
         title: 'Email Address',
-        dataIndex: 'address',
+        dataIndex: 'email',
         filters: [
             {
                 text: 'London',
@@ -67,22 +70,24 @@ const columns = [
     },
     {
         title: 'mobile number',
-        dataIndex: 'age',
+        dataIndex: 'mobile_no',
         // sorter: (a, b) => a.age - b.age,
     },
     {
         title: 'Company Name',
-        dataIndex: 'age',
+        dataIndex: 'company_name',
         // sorter: (a, b) => a.age - b.age,
     },
     {
         title: 'Created Date',
-        dataIndex: 'age',
+        render: (text, record) => (
+            <span className="text-capitalize font16px">{record.created_at.slice(8, 10)}-{record.created_at.slice(5, 7)}-{record.created_at.slice(0, 4)}</span>
+        ),
         // sorter: (a, b) => a.age - b.age,
     },
     {
         title: 'Status',
-        dataIndex: 'age',
+        dataIndex: 'status',
         // sorter: (a, b) => a.age - b.age,
     },
     {
@@ -110,8 +115,8 @@ const ContactDetails = () => {
     const [alldata, setAlldata] = useState([]);
     // const [loader, setLoader] = useState(true);
     const [pagination, setPagination] = useState({
-        current: 1,
-        par_page: 10,
+        current_page: 1,
+        per_page: 10,
         total: 0,
     });
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
@@ -147,21 +152,26 @@ const ContactDetails = () => {
             let payload = {
 
                 page: pagination.current,
-                limit: pagination.pageSize,
+                limit: pagination.per_page,
 
             };
             const response = await axios.get(
                 `${fetchContactDataUrl}`,
-                payload,
+                // payload,
                 API_HEADER
             );
-            setAlldata(response.data.records.data);
-
+            setAlldata(response.data.data.data);
+            console.log("table data", response.data)
             setPagination((prevPagination) => ({
                 ...prevPagination,
-                total: response.data.records.total,
+                total: response.data.data.total,
             }));
-
+            if (response.status === 200) {
+                toast.success(response.data.data.message)
+            }
+            else{
+                // toast.error(response.data.data.message)
+            }
             // Setloader(false);
         } catch (error) {
             toast.error(error.response.data.message);
@@ -401,8 +411,8 @@ const ContactDetails = () => {
                         {/* table of page */}
                         <div className="row">
                             <div className="col-12 border-0 rounded-2">
-                                <Table rowSelection={rowSelection} columns={columns} dataSource={alldata}  pagination={pagination}
-                                                onChange={handleTableChange}
+                                <Table rowSelection={rowSelection} columns={columns} dataSource={alldata} pagination={pagination}
+                                    onChange={handleTableChange}
                                     // pagination={{
                                     //     position: 'topRight', // Set pagination position to top right
                                     // }}

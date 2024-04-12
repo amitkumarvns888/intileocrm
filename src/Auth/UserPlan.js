@@ -7,13 +7,15 @@ import tick from './image/tick.png';
 import Vector3 from './image/Vector3.png';
 import vector2 from './image/Vector2.svg'
 import axios from 'axios';
+import {toast} from 'react-toastify'
 import { useNavigate, Link } from 'react-router-dom';
-
+import { planUrl, BuyNowUrl, API_HEADER } from '../Config'
+import { useParams } from 'react-router-dom';
 const UserPlan = () => {
-    const navigate=useNavigate()
-
+    const navigate = useNavigate()
+ const {id} = useParams();
     const [plans, setPlans] = useState([]);
-
+    const [planid, setPlanid] = useState([]);
     const [isSwitchOn, setIsSwitchOn] = useState(0);
 
     const handleSwitchChange = () => {
@@ -21,19 +23,16 @@ const UserPlan = () => {
         console.log(isSwitchOn)
     };
 
-    const submitform = () => {
-        //here i use api calling
-
-    }
 
     useEffect(() => {
         const fetchData = async () => {
             try {
-                const response = await axios.get(`https://intileo-tech.info/api/admin/plan/plantype/${isSwitchOn}`);
+                const response = await axios.get(`${planUrl}/${isSwitchOn}`);
                 console.log(response.data.data.planType)
                 // const filteredPlans = response.data.filter(plan => plan.plan_type === 0);
                 setPlans(response.data.data.planType);
-
+                setPlanid(response.data.data.planType[0].id);
+                console.log("planid array",response.data.data.planType[0].id)
             } catch (error) {
                 console.error('Failed to fetch plans:', error);
             }
@@ -43,9 +42,30 @@ const UserPlan = () => {
     }, [isSwitchOn]);
 
 
-    const buynow=()=>{
-        navigate('/signin')
+    const buynow = async () => {
+        const payload = {
+            plan_type: isSwitchOn,
+            plan_id: id
+        }
+        console.log("planid",id)
+      
+        try {
+            const response = await axios.post(`${BuyNowUrl}`, payload, API_HEADER);
+            console.log("buy now data", response.data.data)
+            if (response.status == 200) {
+                toast.success(response.data.message)
+                navigate('/dashboard')
+            }
+            else{
+                toast.error(response.data.message)
+            }
+        } catch (error) {
+           console.log(error) 
+        }
+
     }
+
+
 
     return (
 
@@ -53,9 +73,9 @@ const UserPlan = () => {
 
             <img src={image} className='logoimg' alt='logo image' />
             <div className="container">
-                <div className="row">
+                <div className="row d-flex justify-content-center align-items-center mt-5">
                     <div className="col-md-8 offset-md-2">
-                        <Form onSubmit={submitform}>
+                        <Form>
 
                             <Form.Group controlId="formSwitch" className="d-flex align-items-center">
 
@@ -63,7 +83,7 @@ const UserPlan = () => {
                                     <Form.Label>Billed Yearly</Form.Label>
                                 </div>
 
-                                <Form.Check 
+                                <Form.Check
                                     type="switch"
                                     id="custom-switch"
                                     label=""
@@ -72,12 +92,12 @@ const UserPlan = () => {
                                     checked={isSwitchOn === 1}
                                     onChange={handleSwitchChange}
                                     className='toggalbtn'
-                                    style={{position:'relative',left:'-50px',width:'30px'}}
+                                    style={{ position: 'relative', left: '-50px', width: '30px' }}
 
                                 />
 
                                 <div className={`col-md-6 righttext ${isSwitchOn ? 'bold-label' : 'light-label'}`}>
-                                    <Form.Label>Billed Monthly</Form.Label>
+                                    <Form.Label> Monthly</Form.Label>
                                 </div>
                             </Form.Group>
 
@@ -89,7 +109,7 @@ const UserPlan = () => {
                     </div>
                     {/* {plans.map((item)=>{ */}
 
-                    <div className="row">
+                    <div className="d-flex gap-3 justify-content-center align-items-center mt-3">
 
                         {plans.map(plan => (
                             <div className="col-md-4  planborder " key={plan.id}  >
@@ -100,7 +120,7 @@ const UserPlan = () => {
                                 <span className='trail price price'><b style={{ fontSize: "20px", color: "#262626" }}> &#36;{plan.amount} </b> &nbsp;&nbsp;{plan.plan_days
                                 }&nbsp;Days</span>
                                 <br />
-                                <button onClick={buynow} style={{width:"160px",marginLeft:"16px"}} className='btn btn-primary' >Buy Now</button>
+                                <button style={{ width: "160px", marginLeft: "16px" }} className='btn btn-primary' onClick={buynow}>Buy Now</button>
                                 <hr className='hrline' />
                                 <div className='down'>
                                     <ul>
@@ -120,57 +140,7 @@ const UserPlan = () => {
                             </div>
                         ))}
 
-                        {/* </div> */}
 
-                        {/* <div className="col-md-4 card">
-                            <div className='upper'>
-                                <img src={vector2} alt='vector image' />&nbsp;&nbsp;&nbsp;  <span style={{ fontWeight: '800', fontSize: '20px' }}>{plans.name}</span>
-
-                                <p className='dashparaa'>{plans.remarks}</p>
-                            </div>
-                            <span className='trail price'><b style={{ fontSize: "20px", }}> &#36;{plans.amount} </b> &nbsp;&nbsp;{plans.plan_days
-                            }</span>
-
-                            <button>Buy Now</button>
-                            <hr className='hrline' />
-
-                            <div className='down'>
-                                <ul>
-                                    <li > <img src={tick} alt="" className='tickimage' />One End Product</li>
-                                    <li><img src={tick} alt="" className='tickimage' /> No attribute required</li>
-                                    <li><img src={tick} alt="" className='tickimage' /> TypeScript</li>
-                                    <li><img src={tick} alt="" className='tickimage' /> Fifma Design Resource</li>
-                                    <li><img src={tick} alt="" className='tickimage' /> Create Multipal Product</li>
-                                    <li><img src={tick} alt="" className='tickimage' /> Create a SaaS Project</li>
-
-                                </ul>
-                            </div>
-
-                        </div> */}
-                        {/* <div className="col-md-4 card">
-                            <div className='upper'>
-                                <img src={Vector3} alt='vector image' />&nbsp;&nbsp;&nbsp; <span style={{ fontWeight: '800', fontSize: '20px' }}>Extended</span>
-
-                                <p className='dashparaa'>Create one end product for a client, transfer that end product to your client, charge them for your services. The license is then transferred to the client.</p>
-                            </div>
-                            <span className='trail price'><b style={{ fontSize: "20px", }}> &#36;599</b> &nbsp;&nbsp; Lifetime</span>
-
-                            <button>Buy Now</button>
-                            <hr className='hrline' />
-
-                            <div className='down'>
-                                <ul>
-                                    <li > <img src={tick} alt="" className='tickimage' />One End Product</li>
-                                    <li><img src={tick} alt="" className='tickimage' /> No attribute required</li>
-                                    <li><img src={tick} alt="" className='tickimage' /> TypeScript</li>
-                                    <li><img src={tick} alt="" className='tickimage' /> Fifma Design Resource</li>
-                                    <li><img src={tick} alt="" className='tickimage' /> Create Multipal Product</li>
-                                    <li><img src={tick} alt="" className='tickimage' /> Create a SaaS Project</li>
-
-                                </ul>
-                            </div>
-
-                        </div> */}
                     </div>
 
                 </div>

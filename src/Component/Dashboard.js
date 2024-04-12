@@ -15,7 +15,7 @@ const Dashboard = () => {
             <SideNavbar />
             {/* Content Wrapper. Contains page content */}
             <div className="content-wrapper">
-                <div className="content-header">
+                <div className="content">
                     <div className="container-fluid">
                         <div className="row mb-2">
 

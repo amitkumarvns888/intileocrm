@@ -79,14 +79,14 @@ const Forgetmail = () => {
             </div>
 
             <div className="container">
-                <div className="row">
+                <div className="row justify-content-center d-flex align-items-center" style={{ height: '90vh' }}>
                     <div className="resetmain  ">
                         <h2 className='heading'>Reset Your Account</h2>
                         <p className='paraa'>We will send you an email to reset Your account  </p>
                         {/* <br /> */}
 
                         <Form onSubmit={handleSubmit}>
-                            <div className="col-md-5 leftForm">
+                            <div className="col-md-6 leftForm">
                                 <Form.Group controlId="formEmail">
                                     <span className='req'>*</span>
                                     <Form.Label>Email</Form.Label>
