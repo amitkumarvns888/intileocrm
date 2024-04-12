@@ -30,10 +30,10 @@ const CopyPaste = () => {
                             </div>
                         </div>
                         <button type='button' className='btn btn-primary mt-3 mx-3'>Continue</button>
+                        </div>
                     </div>
                 </div>
-            </div>
-            <Footer />
+                <Footer />
         </>
     )
 }

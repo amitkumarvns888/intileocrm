@@ -1,0 +1,32 @@
+.center-content {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Adjust as needed */
+  border: 4px solid black;
+}
+
+.borderBox {
+  border: 4px solid red;
+}
+.buttonHeading {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+p {
+  color: gray;
+  padding-top: 0.5rem;
+}
+.headline {
+  padding: 1rem;
+}
+.spanView {
+  display: flex;
+  padding-top: 2rem;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+.spanView p {
+  margin-right: 1rem;
+}
