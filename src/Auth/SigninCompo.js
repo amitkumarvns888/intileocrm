@@ -69,13 +69,14 @@ const SignCompo = () => {
             const response = await axios.post(`${loginUrl}`, formData);
             console.log('Login successful', response.data);
             console.log(response.status);
-            if (response.status == 200 ) {
+            if (response.status == 200 || response.status == true) {
 
                 toast.success('Login Successfully');
 
                 sessionStorage.setItem("token", response.data.data.token);
                 sessionStorage.setItem("name", response.data.data.name);
                 sessionStorage.setItem('username', JSON.stringify(response.data.data.user.first_name));
+                sessionStorage.setItem('user', JSON.stringify(response.data.data.user));
                 console.log("first name",response.data.data.user)
                 navigate('/plan')
                 window.location.reload()
@@ -167,7 +168,7 @@ const SignCompo = () => {
                 </div>
 
             </div>
-            <ToastContainer />
+            {/* <ToastContainer /> */}
         </div>
     );
 };

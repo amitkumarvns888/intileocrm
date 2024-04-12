@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import { Col, Form, Input, Modal, Row, Select } from 'antd';
-import { configureModal, API_HEADER } from '../config';
+import { configureModal, API_HEADER } from '../Config';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';

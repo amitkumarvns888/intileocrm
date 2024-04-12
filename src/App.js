@@ -43,7 +43,7 @@ function App() {
           <Route path='/copy&paste' element={<CopyPaste />} />
           <Route path='/uploadfile' element={<UploadFile />} />
           <Route path='/importexisting' element={<ImportExisting />} />
-          <Route path='/campaignDashboard' element={<CampaignDashboard />} />
+          <Route path='/campaign' element={<CampaignDashboard />} />
 
         </Routes>
       </BrowserRouter>

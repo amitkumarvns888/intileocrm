@@ -42,10 +42,10 @@ const UserPlan = () => {
     }, [isSwitchOn]);
 
 
-    const buynow = async () => {
+    const buynow = async ( planId) => {
         const payload = {
             plan_type: isSwitchOn,
-            plan_id: planid
+            plan_id: planId 
         }
         console.log("planid",id)
       
@@ -115,27 +115,28 @@ const UserPlan = () => {
                             <div className="col-md-4  planborder " key={plan.id}  >
                                 <div className='upper'>
                                     <img src={vector2} alt='vector image' />&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <span style={{ fontWeight: '800', fontSize: '20px' }}>{plan.name}</span>
-                                    <p className='dashparaa'>{plan.remarks}</p>
+                                    <p className='dashparaa text-truncate'>{plan.remarks}</p>
                                 </div>
                                 <span className='trail price price'><b style={{ fontSize: "20px", color: "#262626" }}> &#36;{plan.amount} </b> &nbsp;&nbsp;{plan.plan_days
                                 }&nbsp;Days</span>
                                 <br />
-                                <button style={{ width: "160px", marginLeft: "16px" }} className='btn btn-primary' onClick={buynow}>Buy Now</button>
+                                <button style={{ width: "160px", marginLeft: "16px" }} className='btn btn-primary' onClick={() => buynow(plan.id)}>Buy Now</button>
                                 <hr className='hrline' />
                                 <div className='down'>
-                                    <ul>
-                                        {/* {plan.features.map((feature, index) => (
-                                            <li key={index}><img src={tick} alt="" className='tickimage' />{feature}</li>
-                                        ))} */}
+                                    {/* {plan.benefits} */}
+                                <ul>
+                                    {/* {plan.benefits.map((item, index) => (
+                                        <li key={index}><img src={tick} alt="" className='tickimage' />{item}</li>
+                                    ))} */}
 
-                                        <li > <img src={tick} alt="" className='tickimage' />One End Product</li>
-                                        <li><img src={tick} alt="" className='tickimage' /> No attribute required</li>
-                                        <li><img src={tick} alt="" className='tickimage' /> TypeScript</li>
-                                        <li><img src={tick} alt="" className='tickimage' /> Fifma Design Resource</li>
-                                        <li><img src={tick} alt="" className='tickimage' /> Create Multipal Product</li>
-                                        <li><img src={tick} alt="" className='tickimage' /> Create a SaaS Project</li>
+                                    <li > <img src={tick} alt="" className='tickimage' />One End Product</li>
+                                    <li><img src={tick} alt="" className='tickimage' /> No attribute required</li>
+                                    <li><img src={tick} alt="" className='tickimage' /> TypeScript</li>
+                                    <li><img src={tick} alt="" className='tickimage' /> Fifma Design Resource</li>
+                                    <li><img src={tick} alt="" className='tickimage' /> Create Multipal Product</li>
+                                    <li><img src={tick} alt="" className='tickimage' /> Create a SaaS Project</li>
 
-                                    </ul>
+                                </ul>
                                 </div>
                             </div>
                         ))}

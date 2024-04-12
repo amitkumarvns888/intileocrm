@@ -47,7 +47,7 @@ const SideNavbar = () => {
                                 </Link>
                             </li>
                             <li className="nav-item menu-open mt-3">
-                            <Link className={`nav-link text-white ${window.location.pathname === '/compaign' ? 'bgActiveLightblue' : ''}`} to="/compaign">
+                            <Link className={`nav-link text-white ${window.location.pathname === '/campaign' ? 'bgActiveLightblue' : ''}`} to="/campaign">
                                     <img src={crmimg2} className='sidebarimg' />
                                     
                                     <p className='font14'>

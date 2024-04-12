@@ -3,8 +3,8 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Table, Form, Input, } from 'antd';
-import { Button, Col, DatePicker, Drawer, Row, Select, Space } from 'antd';
-import { CloseCircleOutlined } from "@ant-design/icons";
+import { Button, Col, DatePicker, Drawer, Row, Select, Space,Dropdown } from 'antd';
+import { CloseCircleOutlined,DownOutlined  } from "@ant-design/icons";
 import eyeicon from '../crmimage/Eye.png'
 import editicon from '../crmimage/Edit.png'
 import importicon from '../crmimage/import.png';
@@ -326,6 +326,23 @@ const ContactDetails = () => {
                                         </Form.Item>
                                     </Col>
                                 </Row>
+                                <Row gutter={16}>
+                                    <Col span={24}>
+                                    <Dropdown
+    menu={{
+      
+    }}
+    trigger={['click']}
+  >
+    <a onClick={(e) => e.preventDefault()}>
+      <Space>
+      Select list or category
+        <DownOutlined />
+      </Space>
+    </a>
+  </Dropdown>
+                                        </Col>
+                                        </Row>
                             </Form>
                         </Drawer>
                         {/* end of drawer of create contact */}
@@ -389,7 +406,7 @@ const ContactDetails = () => {
                                     </Col>
                                 </Row>
                                 <hr />
-                                <Row gutter={16}>
+                                {/* <Row gutter={16}>
                                     <Col span={24} className='d-flex  align-items-start gap-2 justify-content-around'>
                                         <img src={copypasteicon} alt=" copy paste icon" className='bgActiveLightblue p-2 rounded-1' />
                                         <div className='lh-1'>
@@ -402,7 +419,7 @@ const ContactDetails = () => {
                                         </Link>
 
                                     </Col>
-                                </Row>
+                                </Row> */}
                                 <hr />
                             </Form>
                         </Drawer>

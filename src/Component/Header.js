@@ -121,7 +121,7 @@ const Header = () => {
 
                             <div className="dropdown-divider" />
                             <a href="#" className="dropdown-item"><img src={profile} />        Profile</a>
-                            <a href="#" className="dropdown-item"> <img src={profile} /> Sender Domain IPs</a>
+                            <Link to="/sender" className="dropdown-item"> <img src={profile} /> Sender Domain IPs</Link>
                             <a href="#" className="dropdown-item"> <img src={wallet} /> Select Language</a>
                         </div>
                     </li>
