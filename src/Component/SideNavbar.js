@@ -4,6 +4,7 @@ import crmimg2  from '../crmimage/crmimg2.png'
 import icon3 from '../crmimage/icon-wrapper.png'
 import dashmainimg from '../crmimage/dashmainimg.png'
 import '../App.css'
+import { Link } from 'react-router-dom'
 const SideNavbar = () => {
     return (
         <div>
@@ -27,31 +28,32 @@ const SideNavbar = () => {
                     <nav className="mt-2">
                         <ul className="nav nav-pills nav-sidebar flex-column" data-widget="treeview" role="menu" data-accordion="false">
 
-                            <li className="nav-item menu-ope">
-                                <a href="#" className="nav-link ">
+                            <li className="nav-item menu-open mt-3">
+                            <Link className={`nav-link text-white ${window.location.pathname === '/dashboard' ? 'bgActiveLightblue' : ''}`} to="/dashboard">
                                     <img src={dashboardicon} className='sidebarimg' />
                                     <p className='font14'>
                                         Dashboard
                                     </p>
-                                </a>
+                                </Link>
                             </li>
 
-                            <li className="nav-item menu-open">
-                                <a href="#" className="nav-link ">
+                           {/* contact sidebar linked to contactdetails */}
+                           <li className="nav-item mt-3">
+                                <Link className={`nav-link text-white ${window.location.pathname === '/contactdetails' ? 'bgActiveLightblue' : ''}`} to="/contactdetails">
                                     <img src={icon3} className='sidebarimg' />
                                     <p className='font14'>
                                         Contact
                                     </p>
-                                </a>
+                                </Link>
                             </li>
-                            <li className="nav-item menu-open">
-                                <a href="#" className="nav-link ">
+                            <li className="nav-item menu-open mt-3">
+                            <Link className={`nav-link text-white ${window.location.pathname === '/compaign' ? 'bgActiveLightblue' : ''}`} to="/compaign">
                                     <img src={crmimg2} className='sidebarimg' />
                                     
                                     <p className='font14'>
                                         Compaign
                                     </p>
-                                </a>
+                                </Link>
                             </li>
 
 
