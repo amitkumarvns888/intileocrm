@@ -5,6 +5,7 @@ import axios from "axios";
 import { useNavigate, NavLink } from "react-router-dom";
 import { API_HEADER } from "../Config";
 import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const DATA = [
   { id: 1, description: "description1" },
   { id: 2, description: "description2" },
@@ -33,7 +34,7 @@ const QuestionForm2 = () => {
       const response2 = await axios.get(
         "https://intileo-tech.info/api/admin/question/index"
       );
-      console.log(response2.data.data.questions);
+      //   console.log(response2.data.data.questions);
       setFormData2(response2.data.data.questions);
 
       try {
@@ -41,17 +42,10 @@ const QuestionForm2 = () => {
           "https://intileo-tech.info/api/user/answer/program_question/2",
           API_HEADER
         );
-        console.log(options.data.data);
-        // setOptions2(options.data.data);
-        setOptions2(DATA);
+        // console.log(options.data.data);
+        setOptions2(options.data.data);
       } catch (error) {
         console.log(error);
-      }
-
-      if (response2.status === 200) {
-        // navigate('/onboardQuestion3');
-      } else {
-        console.error("Unexpected response status:", response2.status);
       }
     } catch (error) {
       console.error("Error fetching data: ", error);
@@ -74,20 +68,27 @@ const QuestionForm2 = () => {
       toast.error("Please select at least one option!");
       return;
     }
-    console.log("Form submitted! Selected options:", selectedOptions);
+    // console.log("Form submitted! Selected options:", selectedOptions);
     // Your form submission logic goes here
     try {
       //add post url
+
       const resp = await axios.post(
         "",
         { programms_id: selectedOptions },
         { API_HEADER }
       );
-      console.log(resp);
+      if (resp.status === 200) {
+        toast.success("Successfull");
+        navigate("/onboardQuestion3");
+      } else {
+        toast.error("Internal Server error!");
+      }
     } catch (error) {
+      toast.error("Internal Server error!");
       console.log(error);
     }
-    navigate("/onboardQuestion3");
+    setSelectedOptions([]);
   };
 
   return (
@@ -109,18 +110,15 @@ const QuestionForm2 = () => {
               <span className="hrtext">Contact Range</span>
             </div>
             <div className="form2down">
-              <div className="ms-5 me-3 mt-3 mb-1 form2height">
-
-                <h1 className="font30">
-                  {formdata2[1]?.question}
-                </h1>
+              <div className="ms-5 me-3 mt-4 mb-1 form2height">
+                <h1 className="font30">{formdata2[1]?.question}</h1>
                 <p className="form1pa">{formdata2[1]?.description} </p>
 
                 <br />
-                <Form className="pl-4  " onSubmit={submitform2} >
+                <Form className="pl-4  " onSubmit={submitform2}>
                   <FormGroup>
                     <div className="row">
-                      {DATA.map((option) => (
+                      {options2.map((option) => (
                         <div className="col-md-3" key={option.id}>
                           <Form.Check
                             type="checkbox"
@@ -128,7 +126,6 @@ const QuestionForm2 = () => {
                             label={option.description}
                             value={option.id}
                             style={{ fontSize: "20px" }}
-
                             checked={selectedOptions.includes(option.id)}
                             onChange={() => handleCheckboxChange(option.id)}
                           />
@@ -139,7 +136,9 @@ const QuestionForm2 = () => {
                   <div className=" float-right mt-5 me-2">
                     {/* <Link to="#" className="form1skipbtn"> */}
 
-                    <NavLink to="/onboardQuestion2" className='font14'>Skip</NavLink>
+                    <NavLink to="/onboardQuestion3" className="font14">
+                      Skip
+                    </NavLink>
 
                     <Button
                       variant="primary"

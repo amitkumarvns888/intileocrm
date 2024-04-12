@@ -3,22 +3,16 @@ import ImageCompo from "./ImageCompo";
 import { Form, Button, Dropdown } from "react-bootstrap";
 import axios from "axios";
 import { useNavigate, NavLink } from "react-router-dom";
-const DATA = [
-  { id: 1, teams: "team 1" },
-  { id: 2, teams: "team 2" },
-  { id: 3, teams: "team 3" },
-  { id: 4, teams: "team 4" },
-];
-const DATA2 = [
-  { id: 1, teams: "contact 1" },
-  { id: 2, teams: "contact 2" },
-  { id: 3, teams: "contact 3" },
-  { id: 4, teams: "contact 4" },
-];
+import { API_HEADER } from "../Config";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 const QuestionForm3 = () => {
   const navigate = useNavigate();
   const [formdata3, setFormData3] = useState([]);
-  const [dropdownData, setDropdownData] = useState([]);
+  const [dropdownData1, setDropdownData1] = useState([]);
+  const [dropdownData2, setDropdownData2] = useState([]);
+  const [selectedOption1, setSelectedOption1] = useState("");
+  const [selectedOption2, setSelectedOption2] = useState("");
 
   useEffect(() => {
     fetchData();
@@ -32,23 +26,56 @@ const QuestionForm3 = () => {
       setFormData3(response.data.data.questions);
       //   console.log(formdata3);
       try {
-        const response = await axios.get(
-          "https://intileo-tech.info/api/admin/teams/index"
+        const response1 = await axios.get(
+          "https://intileo-tech.info/api/admin/contacts/contacts-list"
         );
-        console.log("dropdown response", response);
+        setDropdownData1(response1.data.data);
+        const response2 = await axios.get(
+          "https://intileo-tech.info/api/admin/teams/teams-list"
+        );
+        setDropdownData2(response2.data.data);
+        // console.log("dropdown response", response.data.data);
+        // console.log("dropdown response", response2.data.data);
       } catch (error) {}
     } catch (error) {
       console.error("Error fetching data: ", error);
     }
   };
-
-  const submitform3 = (event) => {
-    event.preventDefault();
-    console.log("Form submitted! Selected options:");
-    // Your form submission logic goes here
-    // navigate("/dashboard");
+  const handleSelectChange1 = (event) => {
+    console.log(event.target.value);
+    setSelectedOption1(event.target.value);
   };
 
+  const handleSelectChange2 = (event) => {
+    console.log(event.target.value);
+    setSelectedOption2(event.target.value);
+  };
+  const submitform3 = async (event) => {
+    event.preventDefault();
+    console.log(selectedOption1, selectedOption2);
+    try {
+      const resp = await axios.post(
+        "",
+        {
+          teams: selectedOption1,
+          contacts: selectedOption2,
+        },
+        API_HEADER
+      );
+      //   console.log(resp);
+      if (resp.status === 200) {
+        toast.success("Successfull");
+        navigate("/dashboard");
+      } else {
+        toast.error("Internal Server error!");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+    setSelectedOption1("");
+    setSelectedOption2("");
+    // Your form submission logic goes here
+  };
 
   return (
     <div>
@@ -79,26 +106,38 @@ const QuestionForm3 = () => {
 
                 <Form onSubmit={submitform3}>
                   <div key={"vertica"} className="mb-3 ">
-                    <Form.Label className="form3label">
-                      How many people are there in your team?{" "}
-                    </Form.Label>
-                    <Form.Select className="form3choose">
-                      <option>Choose an option</option>
-                      {DATA.map((item) => (
-                        <option value="1">{item.teams}</option>
-                      ))}
-                    </Form.Select>
-                    <br />
+                    <Form.Group controlId="dropdown1">
+                      <Form.Label className="form3label">
+                        How many people are there in your team?{" "}
+                      </Form.Label>
+                      <Form.Select
+                        className="form3choose"
+                        value={selectedOption1}
+                        onChange={handleSelectChange1}
+                      >
+                        <option>Choose an option</option>
+                        {dropdownData1.map((item) => (
+                          <option value={item.id}>{item.contacts}</option>
+                        ))}
+                      </Form.Select>
+                    </Form.Group>
 
-                    <Form.Label className="form3label">
-                      How many contact do you have?{" "}
-                    </Form.Label>
-                    <Form.Select className="form3choose">
-                      <option>Choose an option</option>
-                      {DATA2.map((item) => (
-                        <option value="1">{item.teams}</option>
-                      ))}
-                    </Form.Select>
+                    <br />
+                    <Form.Group controlId="dropdown2">
+                      <Form.Label className="form3label">
+                        How many contact do you have?{" "}
+                      </Form.Label>
+                      <Form.Select
+                        className="form3choose"
+                        value={selectedOption2}
+                        onChange={handleSelectChange2}
+                      >
+                        <option>Choose an option</option>
+                        {dropdownData2.map((item) => (
+                          <option value={item.id}>{item.teams}</option>
+                        ))}
+                      </Form.Select>
+                    </Form.Group>
                   </div>
 
                   <div className=" float-right">
@@ -121,6 +160,7 @@ const QuestionForm3 = () => {
           </div>
         </div>
       </div>
+      <ToastContainer />
     </div>
   );
 };

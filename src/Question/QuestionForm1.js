@@ -31,10 +31,9 @@ const QuestionForm1 = () => {
           API_HEADER
         );
         options = options.data.data.slice(0, 3);
-        console.log("*******************************");
-        console.log(options);
+
         setOptions1(options);
-      } catch (error) { }
+      } catch (error) {}
     } catch (error) {
       console.error("Error fetching data: ", error);
     }
@@ -43,20 +42,28 @@ const QuestionForm1 = () => {
   const submitform1 = async (e) => {
     e.preventDefault();
     if (selectedOption === null) {
-      console.log("please select option....");
+      //   console.log("please select option....");
       toast.error("Please select option!");
       return;
     }
     console.log("form data", selectedOption);
     try {
-      //    const resp = await axios.post(`https://intileo-tech.info/api/user/answer/get-user-select-answer/`,{"answer_id":selectedOption},{API_HEADER})
-      navigate("/onboardQuestion2");
-      //    console.log(resp)
+      const resp = await axios.post(
+        `https://intileo-tech.info/api/user/answer/get-user-select-answer/`,
+        { answer_id: selectedOption },
+        API_HEADER
+      );
+      if (resp.status === 200) {
+        toast.success("Successfull");
+        navigate("/onboardQuestion2");
+      } else {
+        toast.error("Internal Server error!");
+      }
+      console.log(resp);
     } catch (err) {
       console.log(err);
     }
     setSelectedOption(null);
-    toast.success("Successfull");
   };
   const handleOptionChange = (e) => {
     setSelectedOption(e.target.id);
@@ -83,7 +90,6 @@ const QuestionForm1 = () => {
                 </div>
                 <div className="form3down">
                   <div className="ms-3 me-3 mt-2 mb-0">
-
                     <h1 style={{ fontSize: "30px", fontWeight: "600" }}>
                       {formdata1[0]?.question}
                     </h1>
