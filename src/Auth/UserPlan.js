@@ -32,7 +32,7 @@ const UserPlan = () => {
                 // const filteredPlans = response.data.filter(plan => plan.plan_type === 0);
                 setPlans(response.data.data.planType);
                 setPlanid(response.data.data.planType[0].id);
-                console.log("planid array",response.data.data.planType[0].id)
+                console.log("planid array",response.data.data.planType)
             } catch (error) {
                 console.error('Failed to fetch plans:', error);
             }
@@ -45,7 +45,7 @@ const UserPlan = () => {
     const buynow = async () => {
         const payload = {
             plan_type: isSwitchOn,
-            plan_id: id
+            plan_id: 
         }
         console.log("planid",id)
       
