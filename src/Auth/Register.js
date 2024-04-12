@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 // import '../bootstrap.css'
+import { registerUrl, getCompanyTypeUrl,getIndustryTypeUrl } from '../Config';
 import image from './image/logo.png'
 import { Button, Form } from 'react-bootstrap';
 import icon from './image/icon.png'
@@ -8,35 +9,45 @@ import axios from 'axios';
 import './Abc.css'
 import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css'
-import { useNavigate,Link } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 
+import { Select } from 'antd';
 
 
 
 const Register = () => {
-    const  navigate=useNavigate()
+    const navigate = useNavigate()
     const [companytypedrp, setCompanytypedrp] = useState()
 
     const [options, setOptions] = useState([]);
     const [selectedOption, setSelectedOption] = useState('');
 
+    const [companyType, setCompanyType] = useState([]);
+    const [industryType, setIndustryType] = useState([]);
+    const { Option } = Select;
+    const getCompanyType = async (value) => {
+        try {
+
+            const result = await axios.get(`${getCompanyTypeUrl}`);
+            setCompanyType(result.data.data.company_type);
+        } catch (error) {
+            console.log('Error fetching company type data:', error)
+        }
+    }
+    const getIndustryType = async (value) => {
+        try {
+            const result = await axios.get(`${getIndustryTypeUrl}`);
+            setIndustryType(result.data.data.industries);
+        } catch (error) {
+            
+            console.log('Error fetching industry type data:', error)
+        }
+    }
     useEffect(() => {
         // Fetch data from API when component mounts
-        fetchData();
+        getCompanyType();
+        getIndustryType();
     }, []);
-
-    const fetchData = async () => {
-        try {
-            const response = await axios.get('https://intileo-tech.info/api/admin/company_type/index');
-            console.log(options)
-            setOptions(response.data); // Assuming response.data is an array of options
-
-            console.log()
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
-    };
-
     const handleSelectChange = (event) => {
         setSelectedOption(event.target.value);
     };
@@ -200,10 +211,10 @@ const Register = () => {
             setIndustryError('Industry  is Required ');
             return; // Stop form submission if validation fails
         }
-        else if (formData.industry.length < 4) {
-            setIndustryError('Atleast Four character ');
-            return;
-        }
+        // else if (formData.industry.length < 4) {
+        //     setIndustryError('Atleast Four character ');
+        //     return;
+        // }
         else {
             setIndustryError('');
         }
@@ -211,19 +222,15 @@ const Register = () => {
         // here i connect ali
 
         try {
-            const response = await axios.post('https://intileo-tech.info/api/register', formData);
+            const response = await axios.post(`${registerUrl}`, formData);
             console.log('Registration successful:', response.data);
-            navigate('/plan')
+            navigate('/signin')
 
             // Optionally, you can perform actions like showing a success message or redirecting the user.
         } catch (error) {
             console.error('Registration failed:', error);
             // Optionally, you can handle errors, show error messages, or perform other actions based on the error.
         }
-
-
-
-
 
         setFormData({
             first_name: '',
@@ -236,7 +243,7 @@ const Register = () => {
             industry: '',
             // isHuman: false
         });
-        
+
 
         toast.success('Register Successfully')
     };
@@ -323,14 +330,18 @@ const Register = () => {
                                     <span className='req'>*</span>
                                     <Form.Label>Company Type</Form.Label>
                                     <Form.Control as="select" className='placeholderColor' name="company_type" value={formData.company_type} onChange={handleChange}>
-                                        <option value="">Select Company</option>
-                                        <option value="company 1">company 1</option>
-                                        <option value="company 2">company 2</option>
-                                        <option value="company 3">company 3</option>
-
+                                        <option value="">Select Company Type</option>
+                                        {
+                                            companyType.map((item, index) => {
+                                                return (
+                                                    <option key={index} value={item.id}>{item.name}</option>
+                                                )
+                                            })
+                                        }
                                     </Form.Control>
 
                                     {company_type && <div className="error-message">{company_type}</div>}
+                                   
                                 </Form.Group>
 
 
@@ -339,13 +350,17 @@ const Register = () => {
                                     <Form.Label>Industry</Form.Label>
                                     <Form.Control as="select" className='placeholderColor' name="industry" value={formData.industry} onChange={handleChange}>
                                         <option value="" as="select">Select Industry</option>
-                                        <option value="Industry 1">Industry 1</option>
-                                        <option value="Industry 2">Industry 2</option>
-                                        <option value="Industry 3">Industry 3</option>
+                                        {
+                                            industryType.map((item, index) => {
+                                                return (
+                                                    <option key={index} value={item.id}>{item.name}</option>
+                                                )
+                                            })
+                                        }
 
                                     </Form.Control>
 
-                                    {industry && <div className="error-message">{industry}</div>}
+                                    {industry && <div>{industry}</div>}
                                 </Form.Group>
 
 

@@ -7,6 +7,7 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate, Link } from 'react-router-dom';
 import './Abc.css'
+import {loginUrl} from '../Config'
 
 const SignCompo = () => {
     const navigate = useNavigate()
@@ -65,18 +66,18 @@ const SignCompo = () => {
         }
 
         try {
-            const response = await axios.post('https://intileo-tech.info/api/login', formData);
-            console.log('Login successful:', response.data);
+            const response = await axios.post(`${loginUrl}`, formData);
+            console.log('Login successful', response.data);
             console.log(response.status);
-            if (response.status == 200) {
+            if (response.status == 200 ) {
 
                 toast.success('Login Successfully');
 
                 sessionStorage.setItem("token", response.data.data.token);
                 sessionStorage.setItem("name", response.data.data.name);
-                sessionStorage.setItem('user', JSON.stringify(response.data.data.user));
-
-                
+                sessionStorage.setItem('username', JSON.stringify(response.data.data.user.first_name));
+                console.log("first name",response.data.data.user)
+                navigate('/plan')
                 window.location.reload()
 
             } else {
@@ -102,18 +103,18 @@ const SignCompo = () => {
 
 
 
-    const notifyfun = () => {
-        // toast.success("You Are Successfully Login")
+    // const notifyfun = () => {
+    //     // toast.success("You Are Successfully Login")
 
-        navigate('/onboarding')
-    }
+    //     navigate('/onboarding')
+    // }
     return (
         <div>
             <img src={image} className='logoimg' style={{ marginTop: "15px", marginLeft: "10px" }} alt='logo image' />
 
-            <div className='containe formmain2'>
-                <div className="row">
-                    <div className="col rowdiv">
+            <div className='container formmain2'>
+                <div className="row d-flex justify-content-center align-items-center" style={{ height: '80vh' }}>
+                    <div className="col-6 rowdiv">
 
                         <h2 className='formheading2'>Sign in For Portal Name</h2>
                         <p className='para'>New Member ? <span><Link to='/' className='form2bbtm' style={{ textDecoration: 'none' }} >Create an Account</Link> </span> </p>
@@ -158,7 +159,7 @@ const SignCompo = () => {
                             <Link to='/forgetmail' className='forgetbtn'>Forget Password ?</Link>
                             <div className='borderbtm'></div>
                             <br />
-                            <Button variant="primary" className='form2loginbtn' onClick={notifyfun} type="submit">
+                            <Button variant="primary" className='form2loginbtn' type="submit">
                                 Login
                             </Button>
                         </Form>

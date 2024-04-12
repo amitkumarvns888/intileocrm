@@ -6,6 +6,9 @@ import { Card, Button } from 'react-bootstrap';
 import Bootstpcard from './Bootstpcard';
 
 const Dashboard = () => {
+  
+       const nameString = sessionStorage.getItem('username');
+       const name = JSON.parse(nameString);
     return (
         <div>
             <Header />
@@ -22,7 +25,7 @@ const Dashboard = () => {
                                     <li className="breadcrumb-item active">Dashboard v1</li>
                                     <li className="breadcrumb-item active"><b>Analytics</b></li>
                                 </ol>
-                                <h2 className='heading2'>Welcome Himanshu! </h2>
+                                <h2 className='heading2'>Welcome {name}</h2>
                                 <hr className='dashbhrline' />
                             </div>
                         </div>

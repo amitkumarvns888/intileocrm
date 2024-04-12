@@ -5,27 +5,28 @@ import wallet from '../crmimage/Wallet.png'
 import logout from '../crmimage/Logout.png'
 import axios from 'axios';
 import { useNavigate, Link } from 'react-router-dom';
+import { API_HEADER } from '../Config';
  const Header=()=> {
-    const navigate=useNavigate()
-const [user,setUser]=useState("Himanshu Gupta")
+    const navigate= useNavigate();
+    const [user,setUser]=useState("")
      const [notifications, setNotifications] = useState([]);
-
-
-     const token = sessionStorage.getItem("token");
+     useEffect(function () {
+        const nameString = sessionStorage.getItem('username');
+        const name = JSON.parse(nameString);
+        setUser(name)
+    }, [])
+   
 
      useEffect(() => {
          // Fetch notifications from the backend API
-         axios.get('https://intileo-tech.info/api/user/notifications/get-user-notification', {
-             headers: {
-                 'Authorization': `Bearer ${token}`
-             }
-})
+         axios.get('https://intileo-tech.info/api/user/notifications/get-user-notification', API_HEADER)
+
              .then(response => {
 
                  
                  // Update the state with the fetched notifications
-                 setNotifications(response.data);
-                 console.log(response)
+                 setNotifications(response.data.data);
+                 console.log("notifications",response.data.data)
              })
              .catch(error => {
                  console.error('Error fetching notifications:', error);
@@ -34,17 +35,19 @@ const [user,setUser]=useState("Himanshu Gupta")
 
 
      const logoutbutton = async () => {
-         try {
-             const response = await axios.post('https://intileo-tech.info/api/user/logout');
+        //  try {
+        //      const response = await axios.post('https://intileo-tech.info/api/user/logout');
 
-             console.log(response.data); 
+        //      console.log(response.data); 
 
-             navigate('/')
+        //      navigate('/')
 
-         } catch (error) {
-             console.error('Error logging out: ', error);
+        //  } catch (error) {
+        //      console.error('Error logging out: ', error);
              
-         }
+        //  }
+        sessionStorage.clear();
+        navigate("/signin") 
      };
      
         return (
@@ -113,7 +116,7 @@ const [user,setUser]=useState("Himanshu Gupta")
                             </a>
                             <div className="dropdown-menu dropdown-menu-lg dropdown-menu-right">
                                 <img src={Avatar} className='profileimgright'/>
-                                <span className="dropdown-item dropdown-header profilename">Himanshu Gupta  <button onClick={logoutbutton}> <img src={logout}  /> </button>    </span>
+                                <span className="dropdown-item dropdown-header profilename">{user}<button onClick={logoutbutton}> <img src={logout}  /> </button>    </span>
                                 
                                 <div className="dropdown-divider" />
                                 <a href="#" className="dropdown-item"><img src={profile} />        Profile</a>

@@ -1,4 +1,7 @@
-import React, { useState } from 'react'
+import React, { useState ,useEffect} from 'react'
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
+import {toast} from 'react-toastify';
 import { Table, Form, Input, } from 'antd';
 import { Button, Col, DatePicker, Drawer, Row, Select, Space } from 'antd';
 import { CloseCircleOutlined } from "@ant-design/icons";
@@ -9,7 +12,7 @@ import uploadicon from '../crmimage/upload.png';
 import copypasteicon from '../crmimage/copypaste.png';
 import next from '../crmimage/navigate.png';
 import { Link } from 'react-router-dom';
-
+import { API_HEADER, fetchContactDataUrl } from '../Config';
 import Header from '../Component/Header';
 import SideNavbar from '../Component/SideNavbar';
 import Footer from '../Component/Footer';
@@ -101,48 +104,17 @@ const columns = [
         ),
     },
 ];
-const data = [
-    {
-        key: '1',
-        name: 'John Brown',
-        age: 32,
-        address: 'New York No. 1 Lake Park',
-    },
-    {
-        key: '2',
-        name: 'Jim Green',
-        age: 42,
-        address: 'London No. 1 Lake Park',
-    },
-    {
-        key: '3',
-        name: 'Joe Black',
-        age: 32,
-        address: 'Sydney No. 1 Lake Park',
-    },
-    {
-        key: '4',
-        name: 'Jim Red',
-        age: 32,
-        address: 'London No. 2 Lake Park',
-    },
-];
-const onChange = (pagination, filters, sorter, extra) => {
-    console.log('params', pagination, filters, sorter, extra);
-};
+
 const ContactDetails = () => {
 
-
+    const [alldata, setAlldata] = useState([]);
+    // const [loader, setLoader] = useState(true);
+    const [pagination, setPagination] = useState({
+        current: 1,
+        par_page: 10,
+        total: 0,
+    });
     const [selectedRowKeys, setSelectedRowKeys] = useState([]);
-    // const [loading, setLoading] = useState(false);
-    // const start = () => {
-    //     setLoading(true);
-    //     // ajax request after empty completing
-    //     setTimeout(() => {
-    //         setSelectedRowKeys([]);
-    //         setLoading(false);
-    //     }, 1000);
-    // };
     const onSelectChange = (newSelectedRowKeys) => {
         console.log('selectedRowKeys changed: ', newSelectedRowKeys);
         setSelectedRowKeys(newSelectedRowKeys);
@@ -168,6 +140,42 @@ const ContactDetails = () => {
     const onCloseImportContact = () => {
         setOpenimport(false);
     }
+
+    // table data fetching
+    const allData = async () => {
+        try {
+            let payload = {
+
+                page: pagination.current,
+                limit: pagination.pageSize,
+
+            };
+            const response = await axios.get(
+                `${fetchContactDataUrl}`,
+                payload,
+                API_HEADER
+            );
+            setAlldata(response.data.records.data);
+
+            setPagination((prevPagination) => ({
+                ...prevPagination,
+                total: response.data.records.total,
+            }));
+
+            // Setloader(false);
+        } catch (error) {
+            toast.error(error.response.data.message);
+        }
+    };
+    useEffect(() => {
+        allData();
+    }, []);
+
+    const handleTableChange = (pagination, filters, sorter) => {
+        setPagination(pagination);
+        // Setloader(true);
+    };
+
     return (
         <>
             <Header />
@@ -311,6 +319,8 @@ const ContactDetails = () => {
                             </Form>
                         </Drawer>
                         {/* end of drawer of create contact */}
+
+                        {/* drawer of import contact */}
                         <Drawer
                             title={<span className='text-white font16px mx-0'>Import Contact</span>}
                             width={481}
@@ -386,15 +396,16 @@ const ContactDetails = () => {
                                 <hr />
                             </Form>
                         </Drawer>
-                        {/* drawer of import contact */}
                         {/* end of drawer of import contact */}
+
                         {/* table of page */}
                         <div className="row">
                             <div className="col-12 border-0 rounded-2">
-                                <Table rowSelection={rowSelection} columns={columns} dataSource={data} onChange={onChange}
-                                    pagination={{
-                                        position: 'topRight', // Set pagination position to top right
-                                    }}
+                                <Table rowSelection={rowSelection} columns={columns} dataSource={alldata}  pagination={pagination}
+                                                onChange={handleTableChange}
+                                    // pagination={{
+                                    //     position: 'topRight', // Set pagination position to top right
+                                    // }}
                                     scroll={{ x: 1000, }}
                                 />
                             </div>
