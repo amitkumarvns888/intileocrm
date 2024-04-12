@@ -50,22 +50,13 @@ const Sender = () => {
                                </tr>
 
                                 <tr>
-                                    <td> <span className='backsidecolor'><img src={cardimage} /></span> <span className='font14span'> Email Template</span> <p className='font14p'>Domain indicates from whom an email is sent.</p> </td>
-                                </tr>
-
-                                <tr>
-                                    <td> <span className='backsidecolor'><img src={cardimage} /></span> <span className='font14span'> Dedicated IPs</span> <p className='font14p'>A reserved IP for your account to send your marketing & transactional emails.</p>
-                                    
+                                    <td> <span className='backsidecolor'><img src={cardimage} /></span> <span className='font14span'> Email Template</span> <p className='font14p'>Domain indicates from whom an email is sent.</p> 
                                         <Button variant="primary" type="submit" style={{ float: 'right' }} onClick={viewhandler} >
                                             View
                                         </Button>
-                                    
-                                     </td>
-
-
-
-                                    
+                                    </td>
                                 </tr>
+
                             </tbody>
                         </table>
 

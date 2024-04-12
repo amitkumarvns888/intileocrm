@@ -34,7 +34,7 @@ const QuestionForm1 = () => {
         console.log("*******************************");
         console.log(options);
         setOptions1(options);
-      } catch (error) {}
+      } catch (error) { }
     } catch (error) {
       console.error("Error fetching data: ", error);
     }
@@ -50,7 +50,7 @@ const QuestionForm1 = () => {
     console.log("form data", selectedOption);
     try {
       //    const resp = await axios.post(`https://intileo-tech.info/api/user/answer/get-user-select-answer/`,{"answer_id":selectedOption},{API_HEADER})
-        navigate("/onboardQuestion2");
+      navigate("/onboardQuestion2");
       //    console.log(resp)
     } catch (err) {
       console.log(err);
@@ -67,9 +67,9 @@ const QuestionForm1 = () => {
         <div className="image-main">
           <ImageCompo />
         </div>
-        <div className="container">
+        <div className="container ">
           <div className="row">
-            <div className="col-md-12  form1col">
+            <div className="col-md-12   ">
               <Form onSubmit={submitform1}>
                 <div className="uppper">
                   <div className="num"> {formdata1[0]?.id} </div>
@@ -81,44 +81,47 @@ const QuestionForm1 = () => {
                   <div className="numGray">3</div>
                   <span className="hrtext">Contact Range</span>
                 </div>
-                <div className="formdown">
-                  <h1 style={{ fontSize: "30px", fontWeight: "600" }}>
-                    {formdata1[0]?.question}
-                  </h1>
-                  <p className="form1pa">{formdata1[0]?.description} </p>
+                <div className="form3down">
+                  <div className="ms-3 me-3 mt-2 mb-0">
 
-                  <br />
+                    <h1 style={{ fontSize: "30px", fontWeight: "600" }}>
+                      {formdata1[0]?.question}
+                    </h1>
+                    <p className="form1pa">{formdata1[0]?.description} </p>
 
-                  <div className="mb-3">
-                    {options1.map((item) => (
-                      <>
-                        <div className="radiobtn" key={item.id}>
-                          <Form.Check
-                            inline
-                            label={item.answer}
-                            name="group1"
-                            type={"radio"}
-                            id={item.id}
-                            onChange={handleOptionChange}
-                          />
-                        </div>
-                        <br />
-                      </>
-                    ))}
-                  </div>
-                  <div className=" float-right">
-                    {/* <Link to="#" className="form1skipbtn"> */}
+                    <br />
 
-                    <NavLink to="/onboardQuestion2">Skip</NavLink>
+                    <div className="">
+                      {options1.map((item) => (
+                        <>
+                          <div className="radiobtn" key={item.id}>
+                            <Form.Check
+                              inline
+                              label={item.answer}
+                              name="group1"
+                              type={"radio"}
+                              id={item.id}
+                              onChange={handleOptionChange}
+                            />
+                          </div>
+                          <br />
+                        </>
+                      ))}
+                    </div>
+                    <div className=" float-right">
+                      {/* <Link to="#" className="form1skipbtn"> */}
 
-                    <Button
-                      variant="primary"
-                      className="ml-4"
-                      // className="form1nextbtn btn-md"
-                      type="submit"
-                    >
-                      Next
-                    </Button>
+                      <NavLink to="/onboardQuestion2">Skip</NavLink>
+
+                      <Button
+                        variant="primary"
+                        className="ml-4"
+                        // className="form1nextbtn btn-md"
+                        type="submit"
+                      >
+                        Next
+                      </Button>
+                    </div>
                   </div>
                 </div>
               </Form>

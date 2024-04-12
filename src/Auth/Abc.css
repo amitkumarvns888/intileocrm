@@ -244,14 +244,18 @@ li {
     width: 40px;
 }
 
+.font30{
+    font-size: 30px;
+    font-family: 'Public Sans';
+
+}
+.font14{
+    font-size: 16px;
+}
 /* 
  Form 2 style *************************************** */
 
-.form2down {
-    font-size: 30px;
-    margin-top: 10px;
 
-}
 
 .form2down {
     height: 420px;
@@ -261,6 +265,9 @@ li {
     padding-right: 15px;
 
 
+}
+.form2height{
+    min-height: 350px;
 }
 
 .form2uppper {
@@ -305,6 +312,9 @@ li {
     max-width: 898px;
     border: 1px solid beige;
 }
+.form2uppper{
+    /* border: 1px solid beige; */
+}
 
 .form3down {
     height: 420px;
@@ -315,6 +325,8 @@ li {
     padding-right: 15px;
 
 }
+
+
 
 .form3downinside {
     margin-left: 150px;

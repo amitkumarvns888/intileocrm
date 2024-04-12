@@ -45,7 +45,7 @@ const UserPlan = () => {
     const buynow = async () => {
         const payload = {
             plan_type: isSwitchOn,
-            plan_id: 
+            plan_id: planid
         }
         console.log("planid",id)
       

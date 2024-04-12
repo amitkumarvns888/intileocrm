@@ -57,7 +57,7 @@ const QuestionForm3 = () => {
       </div>
       <div className="container">
         <div className="row">
-          <div className="col-md-12  form2col">
+          <div className="col-md-12">
             <div className="form3uppper">
               <div className="numGray">1</div>
               <span className="hrtext">Goal</span>

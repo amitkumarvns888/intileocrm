@@ -12,13 +12,13 @@ const DATA = [
   { id: 4, description: "option4" },
   { id: 5, description: "option5" },
   { id: 6, description: "option6" },
-  { id: 7, description: "option7" },
-  { id: 8, description: "option8" },
-  { id: 9, description: "option9" },
-  { id: 10, description: "option10" },
-  { id: 11, description: "option11" },
-  { id: 12, description: "option12" },
-  { id: 13, description: "option13" },
+  // { id: 7, description: "option7" },
+  // { id: 8, description: "option8" },
+  // { id: 9, description: "option9" },
+  // { id: 10, description: "option10" },
+  // { id: 11, description: "option11" },
+  // { id: 12, description: "option12" },
+  // { id: 13, description: "option13" },
 ];
 const QuestionForm2 = () => {
   const navigate = useNavigate();
@@ -97,7 +97,7 @@ const QuestionForm2 = () => {
       </div>
       <div className="container">
         <div className="row">
-          <div className="col-md-12  form2col">
+          <div className="col-md-12">
             <div className="form2uppper">
               <div className="numGray">1</div>
               <span className="hrtext">Goal</span>
@@ -109,45 +109,49 @@ const QuestionForm2 = () => {
               <span className="hrtext">Contact Range</span>
             </div>
             <div className="form2down">
-              <h1 style={{ fontSize: "30px", fontWeight: "600" }}>
-                {formdata2[1]?.question}
-              </h1>
-              <p className="form1pa">{formdata2[1]?.description} </p>
+              <div className="ms-5 me-3 mt-3 mb-1 form2height">
 
-              <br />
-              <Form className="pl-4" onSubmit={submitform2}>
-                <FormGroup>
-                  <div className="row">
-                    {DATA.map((option) => (
-                      <div className="col-md-3" key={option.id}>
-                        <Form.Check
-                          type="checkbox"
-                          id={option.id}
-                          label={option.description}
-                          value={option.id}
-                          style={{ fontSize: "20px" }}
-                          checked={selectedOptions.includes(option.id)}
-                          onChange={() => handleCheckboxChange(option.id)}
-                        />
-                      </div>
-                    ))}
+                <h1 className="font30">
+                  {formdata2[1]?.question}
+                </h1>
+                <p className="form1pa">{formdata2[1]?.description} </p>
+
+                <br />
+                <Form className="pl-4  " onSubmit={submitform2} >
+                  <FormGroup>
+                    <div className="row">
+                      {DATA.map((option) => (
+                        <div className="col-md-3" key={option.id}>
+                          <Form.Check
+                            type="checkbox"
+                            id={option.id}
+                            label={option.description}
+                            value={option.id}
+                            style={{ fontSize: "20px" }}
+
+                            checked={selectedOptions.includes(option.id)}
+                            onChange={() => handleCheckboxChange(option.id)}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  </FormGroup>
+                  <div className=" float-right mt-5 me-2">
+                    {/* <Link to="#" className="form1skipbtn"> */}
+
+                    <NavLink to="/onboardQuestion2" className='font14'>Skip</NavLink>
+
+                    <Button
+                      variant="primary"
+                      className="ml-4"
+                      // className="form1nextbtn btn-md"
+                      type="submit"
+                    >
+                      Next
+                    </Button>
                   </div>
-                </FormGroup>
-                <div className=" float-right">
-                  {/* <Link to="#" className="form1skipbtn"> */}
-
-                  <NavLink to="/onboardQuestion2">Skip</NavLink>
-
-                  <Button
-                    variant="primary"
-                    className="ml-4"
-                    // className="form1nextbtn btn-md"
-                    type="submit"
-                  >
-                    Next
-                  </Button>
-                </div>
-              </Form>
+                </Form>
+              </div>
             </div>
           </div>
         </div>
