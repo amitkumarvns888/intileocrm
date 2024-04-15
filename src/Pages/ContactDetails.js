@@ -3,8 +3,8 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Table, Form, Input, } from 'antd';
-import { Button, Col, DatePicker, Drawer, Row, Select, Space,Dropdown } from 'antd';
-import { CloseCircleOutlined,DownOutlined  } from "@ant-design/icons";
+import { Button, Col, DatePicker, Drawer, Row, Select, Space, Dropdown,Menu } from 'antd';
+import { CloseCircleOutlined, DownOutlined } from "@ant-design/icons";
 import eyeicon from '../crmimage/Eye.png'
 import editicon from '../crmimage/Edit.png'
 import importicon from '../crmimage/import.png';
@@ -12,7 +12,7 @@ import uploadicon from '../crmimage/upload.png';
 import copypasteicon from '../crmimage/copypaste.png';
 import next from '../crmimage/navigate.png';
 import { Link } from 'react-router-dom';
-import { API_HEADER, fetchContactDataUrl } from '../Config';
+import { API_HEADER, fetchContactDataUrl,createContactFields } from '../Config';
 import Header from '../Component/Header';
 import SideNavbar from '../Component/SideNavbar';
 import Footer from '../Component/Footer';
@@ -112,6 +112,7 @@ const columns = [
 
 const ContactDetails = () => {
 
+    // for table
     const [alldata, setAlldata] = useState([]);
     // const [loader, setLoader] = useState(true);
     const [pagination, setPagination] = useState({
@@ -145,7 +146,22 @@ const ContactDetails = () => {
     const onCloseImportContact = () => {
         setOpenimport(false);
     }
+// fetching create contact dropdown data
 
+const [dropdownitems, setDropdownitems] = useState([]);
+const fetchdropdowndata = async () => {
+    try {
+        const response = await axios.get(`${createContactFields}`, API_HEADER);
+        setDropdownitems(response.data.data);
+        console.log("dropdown data", response.data.data);
+    } catch (error) {
+        console.log("dropdown error",error)
+        toast.error(error.response.data.message);
+    }
+}
+useEffect(() => {
+    fetchdropdowndata();
+},[]);
     // table data fetching
     const allData = async () => {
         try {
@@ -169,7 +185,7 @@ const ContactDetails = () => {
             if (response.status === 200) {
                 toast.success(response.data.data.message)
             }
-            else{
+            else {
                 // toast.error(response.data.data.message)
             }
             // Setloader(false);
@@ -195,7 +211,7 @@ const ContactDetails = () => {
                     <div className="container-fluid">
                         <div className="row d-flex justify-content-between align-items-center">
                             <div className="col-9 mt-5">
-                                <p className='font30px'>Contacts</p>
+                                <p className='font30px textblackfigma'>Contacts</p>
                             </div>
                             <div className="col-3 mt-5">
                                 <button type='button' className='btn btn-outline-secondary me-2 text-capitalize' onClick={showDrawerCreateContact} >create contact</button>
@@ -328,21 +344,26 @@ const ContactDetails = () => {
                                 </Row>
                                 <Row gutter={16}>
                                     <Col span={24}>
-                                    <Dropdown
-    menu={{
-      
-    }}
-    trigger={['click']}
-  >
-    <a onClick={(e) => e.preventDefault()}>
-      <Space>
-      Select list or category
-        <DownOutlined />
-      </Space>
-    </a>
-  </Dropdown>
-                                        </Col>
-                                        </Row>
+                                        <Dropdown
+                                            overlay={
+                                                <Menu>
+                                                  {dropdownitems.map((item, index) => (
+                                                    <Menu.Item key={item.key}>{item.label}</Menu.Item>
+                                                  ))}
+                                                </Menu>
+                                              }
+                                            // overlay={<Menu>{dropdownitems}</Menu>} 
+                                         trigger={['click']}
+                                        >
+                                            <a onClick={(e) => e.preventDefault()}>
+                                                <Space>
+                                                    Select list or category
+                                                    <DownOutlined />
+                                                </Space>
+                                            </a>
+                                        </Dropdown>
+                                    </Col>
+                                </Row>
                             </Form>
                         </Drawer>
                         {/* end of drawer of create contact */}

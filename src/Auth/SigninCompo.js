@@ -77,8 +77,17 @@ const SignCompo = () => {
                 sessionStorage.setItem("name", response.data.data.name);
                 sessionStorage.setItem('username', JSON.stringify(response.data.data.user.first_name));
                 sessionStorage.setItem('user', JSON.stringify(response.data.data.user));
+                sessionStorage.setItem('logincount',JSON.stringify(response.data.data.user.logincount));
                 console.log("first name",response.data.data.user)
-                navigate('/plan')
+                const loginCount = parseInt(response.data.data.user.logincount);
+                if (loginCount > 1) {
+                    // If login count is greater than 1, navigate to dashboard
+                    navigate('/dashboard');
+                } else {
+                    // Otherwise, navigate to plan
+                    navigate('/plan');
+                }
+                // navigate('/plan')
                 window.location.reload()
 
             } else {
@@ -150,7 +159,7 @@ const SignCompo = () => {
                                     className='placeholderColor'
 
                                 />
-                                <img src={icon} className='settingiconimg' alt='setting iamge' />
+                                {/* <img src={icon} className='settingiconimg' alt='setting iamge' /> */}
                                 {passwordError && <div className="error-message">{passwordError}</div>}
                             </Form.Group>
                             <br />
