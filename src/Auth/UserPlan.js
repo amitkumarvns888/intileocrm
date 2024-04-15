@@ -54,7 +54,7 @@ const UserPlan = () => {
             console.log("buy now data", response.data.data)
             if (response.status == 200) {
                 toast.success(response.data.message)
-                navigate('/dashboard')
+                navigate('/onboarding')
             }
             else{
                 toast.error(response.data.message)

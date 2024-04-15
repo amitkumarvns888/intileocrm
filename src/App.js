@@ -17,8 +17,10 @@ import CopyPaste from './Pages/CopyPaste';
 import UploadFile from './Pages/UploadFile';
 import ImportExisting from './Pages/ImportExisting';
 import CampaignDashboard from './Pages/CampaignDashboard';
+import UserDashboard from './Pages/UserDashboard';
 
 function App() {
+  const loginCount = sessionStorage.getItem("logincount");
   return (
     <div class="wrapper">
 
@@ -27,7 +29,15 @@ function App() {
           <Route path='/' element={<Register />} />
           <Route path='/plan' element={<UserPlan />} />
           <Route path='/signin' element={<SigninCompo />} />
-          <Route path='/dashboard' element={<Dashboard />} />
+          {/* <Route path='/dashboard' element={<Dashboard />} />
+
+          <Route path='/userdashboard' element={<UserDashboard />} /> */}
+ {loginCount > 1 ? (
+         <Route path='/dashboard' element={<UserDashboard />} />
+      ) : (
+        <Route path='/dashboard' element={<Dashboard />} />
+       
+      )}
           <Route path='/sender' element={<Sender />} />
           <Route path='/addsender' element={<AddSender />} />
           <Route path='/senderverify' element={<SenderVerifyemail />} />

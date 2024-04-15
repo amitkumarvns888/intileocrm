@@ -43,7 +43,10 @@
 .bgActiveLightblue {
   background-color: #e6f7ff !important;
 }
-
+.boxwidth{
+  width: 19vw !important;
+  height: 18vh;
+}
 .bgBlue {
   background-color: #1890ff !important;
 }
