@@ -3,7 +3,7 @@ import ImageCompo from "./ImageCompo";
 import { Form, Button, Dropdown } from "react-bootstrap";
 import axios from "axios";
 import { useNavigate, NavLink } from "react-router-dom";
-import { API_HEADER } from "../Config";
+import { API_HEADER,UserbaseUrl } from "../Config";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const QuestionForm3 = () => {
@@ -55,7 +55,7 @@ const QuestionForm3 = () => {
     console.log(selectedOption1, selectedOption2);
     try {
       const resp = await axios.post(
-        "",
+        `${UserbaseUrl}/question/user-team-contact`,
         {
           teams: selectedOption1,
           contacts: selectedOption2,
