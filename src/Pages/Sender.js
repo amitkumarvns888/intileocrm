@@ -46,17 +46,23 @@ const Sender = () => {
                         <table className="table">
                             <tbody>
                                <tr>
-                                    <td> <span className='backsidecolor'><img src={cardimage} /></span> <span className='font14span'> Sender</span> <p className='font14p'>Sender are shown in your recipient’s inbox when they receive your email.</p> </td>
+                                    <td> <span className='backsidecolor'><img src={cardimage} /></span> <span className='font14span'> Sender</span> <p className='font14p'>Sender are shown in your recipient’s inbox when they receive your email.</p> 
+                                    <Button variant="primary" type="submit" style={{ float: 'right' }} onClick={viewhandler} >
+                                            View
+                                        </Button>
+                                    
+                                    </td>
                                </tr>
 
                                 <tr>
-                                    <td> <span className='backsidecolor'><img src={cardimage} /></span> <span className='font14span'> Email Template</span> <p className='font14p'>Domain indicates from whom an email is sent.</p> 
-                                        <Button variant="primary" type="submit" style={{ float: 'right' }} onClick={viewhandler} >
+                                    <td> <span className='backsidecolor'><img src={cardimage} /></span> <span className='font14span'> Email Template</span> <p className='font14p'>Domain indicates from whom an email is sent.</p>
+                                    <Button variant="primary" type="submit" style={{ float: 'right' }} onClick={()=>{navigate('/craeteemail')}} >
                                             View
                                         </Button>
-                                    </td>
+                                     </td>
                                 </tr>
 
+                               
                             </tbody>
                         </table>
 

@@ -12,6 +12,9 @@ export const BuyNowUrl = `${UserbaseUrl}/user-select-plan`;
 export const getContactTableData = `${UserbaseUrl}/contact-data-master/get-list`;
 export const getFetchQuestionUrl = `${UserbaseUrl}/question/get-user-question`;
 export const fetchContactDataUrl = `${UserbaseUrl}/contact-data-master/get-list`;
+export const addSenderUrl = `${UserbaseUrl}/email-config/new-sender`;
+export const verifyEmailConfig =`${UserbaseUrl}/email-config/verified-email-config`;
+export const createContactFields = `${UserbaseUrl}/contact-data-master/contact-fields`;
 // ADMIN URL
 export const getCompanyTypeUrl = `${AdminbaseUrl}/company_type/index`;
 export const getIndustryTypeUrl= `${AdminbaseUrl}/industry/index`;

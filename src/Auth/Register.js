@@ -219,33 +219,37 @@ const Register = () => {
             setIndustryError('');
         }
 
-        // here i connect ali
+        // here i connect api
 
         try {
             const response = await axios.post(`${registerUrl}`, formData);
+            if(response.status === 200){
             console.log('Registration successful:', response.data);
+            toast.success(response.data.message)
+            setFormData({
+                first_name: '',
+                last_name: '',
+                email: '',
+                password: '',
+                company: '',
+                company_type: '',
+                contact_no: '',
+                industry: '',
+                // isHuman: false
+            });
+    
             navigate('/signin')
-
+            }
             // Optionally, you can perform actions like showing a success message or redirecting the user.
         } catch (error) {
             console.error('Registration failed:', error);
+            toast.error(error.response.data.message)
             // Optionally, you can handle errors, show error messages, or perform other actions based on the error.
         }
 
-        setFormData({
-            first_name: '',
-            last_name: '',
-            email: '',
-            password: '',
-            company: '',
-            company_type: '',
-            contact_no: '',
-            industry: '',
-            // isHuman: false
-        });
+       
 
-
-        toast.success('Register Successfully')
+        // toast.success('Register Successfully')
     };
 
     const onChange = (value) => {
@@ -319,7 +323,7 @@ const Register = () => {
                                     <span className='req'>*</span>
                                     <Form.Label>Password</Form.Label>
                                     <Form.Control type="password" name="password" placeholder='*******' value={formData.password} className='placeholderColor' onChange={handleChange} />
-                                    <img src={icon} className='settingiconimg' alt='setting iamge' />
+                                    {/* <img src={icon} className='settingiconimg' alt='setting iamge' /> */}
 
                                     {passwordError && <div className="error-message">{passwordError}</div>}
                                 </Form.Group>

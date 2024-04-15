@@ -64,29 +64,39 @@ const SignCompo = () => {
       const response = await axios.post(`${loginUrl}`, formData);
       console.log("Login successful", response.data);
       console.log(response.status);
-      if (response.status === 200) {
+      if (response.status === 200|| response.status == true) {
         toast.success("Login Successfully");
 
-        sessionStorage.setItem("token", response.data.data.token);
-        sessionStorage.setItem("name", response.data.data.name);
-        sessionStorage.setItem(
-          "username",
-          JSON.stringify(response.data.data.user.first_name)
-        );
-        console.log("first name", response.data.data.user);
-        navigate("/plan");
-        window.location.reload();
-      } else {
-        toast.error(response.data.error);
-      }
+                sessionStorage.setItem("token", response.data.data.token);
+                sessionStorage.setItem("name", response.data.data.name);
+                sessionStorage.setItem('username', JSON.stringify(response.data.data.user.first_name));
+                sessionStorage.setItem('user', JSON.stringify(response.data.data.user));
+                sessionStorage.setItem('logincount',JSON.stringify(response.data.data.user.logincount));
+                console.log("first name",response.data.data.user)
+                const loginCount = parseInt(response.data.data.user.logincount);
+                if (loginCount > 1) {
+                    // If login count is greater than 1, navigate to dashboard
+                    navigate('/dashboard');
+                } else {
+                    // Otherwise, navigate to plan
+                    navigate('/plan');
+                }
+                // navigate('/plan')
+                window.location.reload()
 
-      // Optionally, you can perform actions like showing a success message or redirecting the user.
-    } catch (error) {
-      console.error("Login failed:", error);
-      toast.error("Failed to login!");
-      // Optionally, you can handle errors, show error messages, or perform other actions based on the error.
-    }
-    // toast.success('User Login SuccessFully')
+            } else {
+
+                toast.error(response.data.error);
+
+            }
+
+            
+            // Optionally, you can perform actions like showing a success message or redirecting the user.
+        } catch (error) {
+            console.error('Login failed:', error);
+            // Optionally, you can handle errors, show error messages, or perform other actions based on the error.
+        }
+        // toast.success('User Login SuccessFully')
 
     setFormData({
       email: "",
@@ -128,61 +138,56 @@ const SignCompo = () => {
               </span>{" "}
             </p>
 
-            <Form onSubmit={handleSubmit}>
-              <Form.Group controlId="formEmail">
-                <span className="req">*</span>
-                <Form.Label>Email Address</Form.Label>
-                <Form.Control
-                  type="email"
-                  name="email"
-                  placeholder="Enter email"
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="placeholderColor"
-                />
-                {emailError && (
-                  <div className="error-message">{emailError}</div>
-                )}
-              </Form.Group>
-              <Form.Group controlId="formPassword" className="formcompo">
-                <span className="req">*</span>
-                <Form.Label>Password</Form.Label>
-                <Form.Control
-                  type="password"
-                  name="password"
-                  placeholder="*********"
-                  value={formData.password}
-                  onChange={handleChange}
-                  className="placeholderColor"
-                />
-                <img
-                  src={icon}
-                  className="settingiconimg"
-                  alt="setting iamge"
-                />
-                {passwordError && (
-                  <div className="error-message">{passwordError}</div>
-                )}
-              </Form.Group>
-              <br />
-              <input type="checkbox" className="check" />{" "}
-              <span>Keep Me Logged In</span>
-              <br />
-              <br />
-              <Link to="/forgetmail" className="forgetbtn">
-                Forget Password ?
-              </Link>
-              <div className="borderbtm"></div>
-              <br />
-              <Button variant="primary" className="form2loginbtn" type="submit">
-                Login
-              </Button>
-            </Form>
-          </div>
+                        <Form onSubmit={handleSubmit}>
+                            <Form.Group controlId="formEmail">
+                                <span className='req'>*</span>
+                                <Form.Label>Email Address</Form.Label>
+                                <Form.Control
+                                    type="email"
+                                    name="email"
+                                    placeholder="Enter email"
+                                    value={formData.email}
+                                    onChange={handleChange}
+
+                                    className='placeholderColor'
+                                />
+                                {emailError && <div className="error-message">{emailError}</div>}
+                            </Form.Group>
+
+                            <Form.Group controlId="formPassword" className='formcompo'>
+                                <span className='req'>*</span>
+                                <Form.Label>Password</Form.Label>
+                                <Form.Control
+                                    type="password"
+                                    name="password"
+                                    placeholder="*********"
+                                    value={formData.password}
+                                    onChange={handleChange}
+
+                                    className='placeholderColor'
+
+                                />
+                                {/* <img src={icon} className='settingiconimg' alt='setting iamge' /> */}
+                                {passwordError && <div className="error-message">{passwordError}</div>}
+                            </Form.Group>
+                            <br />
+                            <input type='checkbox' className='check' /> <span>Keep Me Logged In</span>
+                            <br />
+                            <br />
+                            <Link to='/forgetmail' className='forgetbtn'>Forget Password ?</Link>
+                            <div className='borderbtm'></div>
+                            <br />
+                            <Button variant="primary" className='form2loginbtn' type="submit">
+                                Login
+                            </Button>
+                        </Form>
+                    </div>
+                </div>
+
+            </div>
+            {/* <ToastContainer /> */}
         </div>
-      </div>
-    </div>
-  );
+    );
 };
 
 export default SignCompo;

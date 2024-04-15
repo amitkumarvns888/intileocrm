@@ -7,7 +7,7 @@ const Bootstpcard = () => {
         <div className='container'>
             <div className='row'>
                 <div className='col-md-6'>
-                    <Card style={{ width: "288px", height: '163px', marginLeft: '-130px' }} >
+                    <Card style={{ width: "288px", height: '180px', marginLeft: '-130px' }} >
                         <Card.Body>
                             <div className="d-flex align-items-center mb-3">
                                 <div>
@@ -25,7 +25,7 @@ const Bootstpcard = () => {
                     </Card>
                 </div>
                 <div className='col-md-6'>
-                    <Card style={{ width: "288px", height: '163px', marginLeft: '-220px' }}>
+                    <Card style={{ width: "288px", height: '180px', marginLeft: '-220px' }}>
                         <Card.Body>
                             <div className="d-flex align-items-center mb-3">
                                 <div>

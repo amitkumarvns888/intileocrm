@@ -18,22 +18,32 @@ import UploadFile from "./Pages/UploadFile";
 import ImportExisting from "./Pages/ImportExisting";
 import CampaignDashboard from "./Pages/CampaignDashboard";
 import EmailTemplating from "./Pages/EmailTemplating";
+import UserDashboard from "./Pages/UserDashboard";
 import Test from "./Pages/Test";
 
 function App() {
+  const loginCount = sessionStorage.getItem("logincount");
   return (
     // <div class="wrapper">
       <BrowserRouter>
         <Routes>
-          <Route path="/" element={<Register />} />
-          <Route path="/plan" element={<UserPlan />} />
-          <Route path="/signin" element={<SigninCompo />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/sender" element={<Sender />} />
-          <Route path="/addsender" element={<AddSender />} />
-          <Route path="/senderverify" element={<SenderVerifyemail />} />
-          <Route path="/forgetmail" element={<Forgetmail />} />
-          <Route path="/resetpass" element={<Resetpass />} />
+          <Route path='/' element={<Register />} />
+          <Route path='/plan' element={<UserPlan />} />
+          <Route path='/signin' element={<SigninCompo />} />
+          {/* <Route path='/dashboard' element={<Dashboard />} />
+
+          <Route path='/userdashboard' element={<UserDashboard />} /> */}
+ {loginCount > 1 ? (
+         <Route path='/dashboard' element={<UserDashboard />} />
+      ) : (
+        <Route path='/dashboard' element={<Dashboard />} />
+       
+      )}
+          <Route path='/sender' element={<Sender />} />
+          <Route path='/addsender' element={<AddSender />} />
+          <Route path='/senderverify' element={<SenderVerifyemail />} />
+          <Route path='/forgetmail' element={<Forgetmail />} />
+          <Route path='/resetpass' element={<Resetpass />} />
           {/* <Route path='/form1' element={<QuestionForm1 />} /> */}
           <Route path="/onboarding" element={<QuestionForm1 />} />
           <Route path="/onboardQuestion2" element={<QuestionForm2 />} />
