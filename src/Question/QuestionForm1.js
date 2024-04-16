@@ -4,7 +4,7 @@ import { Form, Button } from "react-bootstrap";
 import axios from "axios";
 import { useNavigate, Link, NavLink } from "react-router-dom";
 import { API_HEADER } from "../Config";
-import { toast, ToastContainer } from "react-toastify";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 
 const QuestionForm1 = () => {
@@ -21,6 +21,7 @@ const QuestionForm1 = () => {
     try {
       const response = await axios.get(
         "https://intileo-tech.info/api/admin/question/index"
+        
       );
       console.log(response.data.data.questions);
       setFormData1(response.data.data.questions);
@@ -49,19 +50,19 @@ const QuestionForm1 = () => {
     console.log("form data", selectedOption);
     try {
       const resp = await axios.post(
-        `https://intileo-tech.info/api/user/answer/get-user-select-answer/`,
+        "https://intileo-tech.info/api/user/answer/get-user-select-answer",
         { answer_id: selectedOption },
         API_HEADER
       );
       if (resp.status === 200) {
-        toast.success("Successfull");
+        toast.success(resp.data.message);
         navigate("/onboardQuestion2");
       } else {
-        toast.error("Internal Server error!");
+        toast.error(resp.data.message);
       }
       console.log(resp);
     } catch (err) {
-      console.log(err);
+      console.log("question form 1",err);
     }
     setSelectedOption(null);
   };
@@ -135,7 +136,7 @@ const QuestionForm1 = () => {
           </div>
         </div>
       </div>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
     </>
   );
 };

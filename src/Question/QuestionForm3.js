@@ -3,8 +3,8 @@ import ImageCompo from "./ImageCompo";
 import { Form, Button, Dropdown } from "react-bootstrap";
 import axios from "axios";
 import { useNavigate, NavLink } from "react-router-dom";
-import { API_HEADER } from "../Config";
-import { toast, ToastContainer } from "react-toastify";
+import { API_HEADER,questionFormUrl3 } from "../Config";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const QuestionForm3 = () => {
   const navigate = useNavigate();
@@ -55,19 +55,19 @@ const QuestionForm3 = () => {
     console.log(selectedOption1, selectedOption2);
     try {
       const resp = await axios.post(
-        "",
+        `${questionFormUrl3}`,
         {
-          teams: selectedOption1,
-          contacts: selectedOption2,
+          team_size: selectedOption1,
+          contact_size: selectedOption2,
         },
         API_HEADER
       );
       //   console.log(resp);
       if (resp.status === 200) {
-        toast.success("Successfull");
+        toast.success(resp.data.message);
         navigate("/dashboard");
       } else {
-        toast.error("Internal Server error!");
+        toast.error(resp.data.message);
       }
     } catch (error) {
       console.log(error);
@@ -160,7 +160,7 @@ const QuestionForm3 = () => {
           </div>
         </div>
       </div>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
     </div>
   );
 };

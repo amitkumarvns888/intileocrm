@@ -19,6 +19,9 @@ import ImportExisting from './Pages/ImportExisting';
 import CampaignDashboard from './Pages/CampaignDashboard';
 import UserDashboard from './Pages/UserDashboard';
 
+
+import ContactProfile from './Pages/ContactProfile';
+
 function App() {
   const loginCount = sessionStorage.getItem("logincount");
   return (
@@ -54,7 +57,7 @@ function App() {
           <Route path='/uploadfile' element={<UploadFile />} />
           <Route path='/importexisting' element={<ImportExisting />} />
           <Route path='/campaign' element={<CampaignDashboard />} />
-
+<Route path='/test' element={<ContactProfile/>}/>
         </Routes>
       </BrowserRouter>
     </div>

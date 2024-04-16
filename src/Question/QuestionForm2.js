@@ -3,8 +3,8 @@ import ImageCompo from "./ImageCompo";
 import { Form, Button, FormGroup } from "react-bootstrap";
 import axios from "axios";
 import { useNavigate, NavLink } from "react-router-dom";
-import { API_HEADER } from "../Config";
-import { toast, ToastContainer } from "react-toastify";
+import { API_HEADER,questionFormUrl2 } from "../Config";
+import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 const DATA = [
   { id: 1, description: "description1" },
@@ -74,18 +74,18 @@ const QuestionForm2 = () => {
       //add post url
 
       const resp = await axios.post(
-        "",
-        { programms_id: selectedOptions },
-        { API_HEADER }
+        `${questionFormUrl2}`,
+        { programs_id: selectedOptions },
+         API_HEADER 
       );
       if (resp.status === 200) {
-        toast.success("Successfull");
+        toast.success(resp.data.message);
         navigate("/onboardQuestion3");
       } else {
-        toast.error("Internal Server error!");
+        toast.error(resp.data.message);
       }
     } catch (error) {
-      toast.error("Internal Server error!");
+      // toast.error(resp.data.message);
       console.log(error);
     }
     setSelectedOptions([]);
@@ -155,7 +155,7 @@ const QuestionForm2 = () => {
           </div>
         </div>
       </div>
-      <ToastContainer />
+      {/* <ToastContainer /> */}
     </div>
   );
 };

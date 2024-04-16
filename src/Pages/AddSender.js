@@ -23,13 +23,14 @@ const AddSender = () => {
         e.preventDefault();
         try {
             const payload = {
+                // email_config_id: 
                 email: email,
                 sender_name: sendername,
             }
             const response = await axios.post(`${addSenderUrl}`, payload, API_HEADER);
             if (response.status === 200) {
                 toast.success(response.data.message)
-                navigate('/senderverify', { state: { email } });
+                navigate('/senderverify', { state: { email ,sendername} });
                 // navigate(`/senderverify/${email}`);
             }
         } catch (error) {

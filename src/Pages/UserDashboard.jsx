@@ -169,7 +169,7 @@ const UserDashboard = () => {
                             </div>
                         </div>
                         {/* 4th row */}
-                        <div className="row my-4 mx-2">
+                        <div className="row my-4">
                             <div className="col-lg-7 mx-3">
                                 <div className="row d-flex justify-content-between align-items-center">
                                     <div className="col-5">
@@ -183,8 +183,54 @@ const UserDashboard = () => {
                                     {/* tabs of mail */}
                                     <Tabs activeKey={activeTab} onChange={handleTabChange}>
 
-
+                                        {/* inbox tab */}
                                         <TabPane tab="Inbox" key="1">
+                                            {/* before every table search and sorting */}
+                                            <div className='row d-flex align-items-center'>
+                                                <Input addonBefore={<SearchOutlined />} variant="borderless" placeholder="Search" className='bg-white col-4 rounded-1' />
+                                                <div className="col-8 d-flex gap-2 justify-content-end">
+                                                    <p>Sender's Email</p>
+                                                    <Select
+                                                        showSearch
+                                                        allowClear
+                                                        placeholder="Select by email"
+                                                        optionFilterProp="children"
+                                                    // filterOption={filterOption}
+                                                    // onChange={handleEmailSearch}
+                                                    // style={{ width: "100%", boxShadow: "3px 3px 5px rgba(0, 0, 0, 0.2)" }}
+                                                    // className="rounded-2"
+                                                    >
+                                                        <Option value="">Select</Option>
+                                                        {/* {emails.map((email, index) => (
+                                                          <Option
+                                                         key={index}
+                                                         value={email.id}
+                                                         label={email.name}
+                                                         >
+                                                         {email.name}
+                                                           </Option>
+                                                         ))} */}
+                                                    </Select>
+                                                </div>
+                                            </div>
+                                            {/* table */}
+                                            <div className="row">
+                                                <div className="col-12 border-0 rounded-2">
+                                                    <Table rowSelection={rowSelection} columns={columns} dataSource={alldata} pagination={pagination}
+                                                        onChange={handleTableChange}
+                                                    // pagination={{
+                                                    //     position: 'topRight', // Set pagination position to top right
+                                                    // }}
+                                                    // scroll={{ x: 1000, }}
+                                                    />
+                                                </div>
+
+                                            </div>
+
+                                        </TabPane>
+
+                                        {/* sent tab */}
+                                        <TabPane tab="Sent" key="2">
                                             {/* before every table search and sorting */}
                                             <div className='row d-flex align-items-center'>
                                                 <Input addonBefore={<SearchOutlined />} variant="borderless" placeholder="Search" className='bg-white col-4 rounded-1' />
@@ -228,19 +274,94 @@ const UserDashboard = () => {
                                             </div>
                                         </TabPane>
 
-
-                                        <TabPane tab="Sent" key="2">
-                                            Content of Tab Pane 2
-                                        </TabPane>
-
-
+                                        {/* spam tab */}
                                         <TabPane tab="Spam" key="3">
-                                            Content of Tab Pane 3
+                                            {/* before every table search and sorting */}
+                                            <div className='row d-flex align-items-center'>
+                                                <Input addonBefore={<SearchOutlined />} variant="borderless" placeholder="Search" className='bg-white col-4 rounded-1' />
+                                                <div className="col-8 d-flex gap-2 justify-content-end">
+                                                    <p>Sender's Email</p>
+                                                    <Select
+                                                        showSearch
+                                                        allowClear
+                                                        placeholder="Select by email"
+                                                        optionFilterProp="children"
+                                                    // filterOption={filterOption}
+                                                    // onChange={handleEmailSearch}
+                                                    // style={{ width: "100%", boxShadow: "3px 3px 5px rgba(0, 0, 0, 0.2)" }}
+                                                    // className="rounded-2"
+                                                    >
+                                                        <Option value="">Select</Option>
+                                                        {/* {emails.map((email, index) => (
+                                                          <Option
+                                                         key={index}
+                                                         value={email.id}
+                                                         label={email.name}
+                                                         >
+                                                         {email.name}
+                                                           </Option>
+                                                         ))} */}
+                                                    </Select>
+                                                </div>
+                                            </div>
+                                            {/* table */}
+                                            <div className="row">
+                                                <div className="col-12 border-0 rounded-2">
+                                                    <Table rowSelection={rowSelection} columns={columns} dataSource={alldata} pagination={pagination}
+                                                        onChange={handleTableChange}
+                                                    // pagination={{
+                                                    //     position: 'topRight', // Set pagination position to top right
+                                                    // }}
+                                                    // scroll={{ x: 1000, }}
+                                                    />
+                                                </div>
+
+                                            </div>
                                         </TabPane>
 
-
+                                        {/* deleted tab */}
                                         <TabPane tab="Deleted" key="4">
-                                            Content of Tab Pane 4
+                                            {/* before every table search and sorting */}
+                                            <div className='row d-flex align-items-center'>
+                                                <Input addonBefore={<SearchOutlined />} variant="borderless" placeholder="Search" className='bg-white col-4 rounded-1' />
+                                                <div className="col-8 d-flex gap-2 justify-content-end">
+                                                    <p>Sender's Email</p>
+                                                    <Select
+                                                        showSearch
+                                                        allowClear
+                                                        placeholder="Select by email"
+                                                        optionFilterProp="children"
+                                                    // filterOption={filterOption}
+                                                    // onChange={handleEmailSearch}
+                                                    // style={{ width: "100%", boxShadow: "3px 3px 5px rgba(0, 0, 0, 0.2)" }}
+                                                    // className="rounded-2"
+                                                    >
+                                                        <Option value="">Select</Option>
+                                                        {/* {emails.map((email, index) => (
+                                                          <Option
+                                                         key={index}
+                                                         value={email.id}
+                                                         label={email.name}
+                                                         >
+                                                         {email.name}
+                                                           </Option>
+                                                         ))} */}
+                                                    </Select>
+                                                </div>
+                                            </div>
+                                            {/* table */}
+                                            <div className="row">
+                                                <div className="col-12 border-0 rounded-2">
+                                                    <Table rowSelection={rowSelection} columns={columns} dataSource={alldata} pagination={pagination}
+                                                        onChange={handleTableChange}
+                                                    // pagination={{
+                                                    //     position: 'topRight', // Set pagination position to top right
+                                                    // }}
+                                                    // scroll={{ x: 1000, }}
+                                                    />
+                                                </div>
+
+                                            </div>
                                         </TabPane>
                                     </Tabs>
                                 </div>
@@ -252,6 +373,30 @@ const UserDashboard = () => {
                                     </div>
                                     <div className="col-1">
                                         <img src={threedot} alt="more" />
+                                    </div>
+                                </div>
+                                <div className="row bg-white p-3 ">
+                                    <div className="col-12 ">
+                                        <div className='d-flex justify-content-between '>
+                                            <p className='textblackfigma text-capitalize'>on a day</p>
+                                            <p className='textblackfigma text-capitalize'>55</p>
+                                        </div>
+
+                                        <hr />
+
+                                        <div className='d-flex justify-content-between '>
+                                            <p className='textblackfigma text-capitalize'>on a week</p>
+                                            <p className='textblackfigma text-capitalize'>55</p>
+                                        </div>
+
+                                        <hr />
+
+                                        <div className='d-flex justify-content-between '>
+                                            <p className='textblackfigma text-capitalize'>on a month</p>
+                                            <p className='textblackfigma text-capitalize'>55</p>
+                                        </div>
+
+                                        <hr />
                                     </div>
                                 </div>
                             </div>
