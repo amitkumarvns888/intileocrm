@@ -1,6 +1,7 @@
 import React from 'react'
 import { Card, Button } from 'react-bootstrap';
 import cardimage from '../crmimage/cardimage.png'
+import { Link } from 'react-router-dom';
 import '../App.css'
 const Bootstpcard = () => {
     return (
@@ -20,7 +21,7 @@ const Bootstpcard = () => {
                             <Card.Text className='cardintext'>
                                 Amplify your reach and connect with your audience via email.
                             </Card.Text>
-                            <Button variant="primary">Create Campaign</Button>
+                            <Link to="/campaign"><Button variant="primary">Create Campaign</Button></Link>
                         </Card.Body>
                     </Card>
                 </div>
@@ -38,7 +39,7 @@ const Bootstpcard = () => {
                             <Card.Text className='cardintext'>
                                 Keep your contact all in one place for easy access.
                             </Card.Text>
-                            <Button variant="primary">Add Contact</Button>
+                            <Link to="/contactdetails"><Button variant="primary">Add Contact</Button></Link>
                         </Card.Body>
                     </Card>
                 </div>

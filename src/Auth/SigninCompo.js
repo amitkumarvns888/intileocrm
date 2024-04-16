@@ -1,13 +1,13 @@
-import React, { useState } from "react";
-import { Button, Form } from "react-bootstrap";
-import icon from "./image/icon.png";
-import image from "./image/logo.png";
-import axios from "axios";
-import { ToastContainer, toast } from "react-toastify";
-import "react-toastify/dist/ReactToastify.css";
-import { useNavigate, Link } from "react-router-dom";
-import "./Abc.css";
-import { loginUrl } from "../Config";
+import React, { useState } from 'react';
+import { Button, Form } from 'react-bootstrap';
+import icon from './image/icon.png'
+import image from './image/logo.png'
+import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate, Link } from 'react-router-dom';
+import './Abc.css'
+import { loginUrl } from '../Config'
 
 const SignCompo = () => {
   const navigate = useNavigate();
@@ -60,19 +60,20 @@ const SignCompo = () => {
       setPasswordError("");
     }
 
-    try {
-      const response = await axios.post(`${loginUrl}`, formData);
-      console.log("Login successful", response.data);
-      console.log(response.status);
-      if (response.status === 200|| response.status == true) {
-        toast.success("Login Successfully");
+        try {
+            const response = await axios.post(`${loginUrl}`, formData);
+            console.log('Login successful', response.data);
+            console.log(response.status);
+            if (response.status == 200 || response.status == true) {
+
+                toast.success(response.data.message);
 
                 sessionStorage.setItem("token", response.data.data.token);
                 sessionStorage.setItem("name", response.data.data.name);
                 sessionStorage.setItem('username', JSON.stringify(response.data.data.user.first_name));
                 sessionStorage.setItem('user', JSON.stringify(response.data.data.user));
-                sessionStorage.setItem('logincount',JSON.stringify(response.data.data.user.logincount));
-                console.log("first name",response.data.data.user)
+                sessionStorage.setItem('logincount', JSON.stringify(response.data.data.user.logincount));
+                console.log("first name", response.data.data.user)
                 const loginCount = parseInt(response.data.data.user.logincount);
                 if (loginCount > 1) {
                     // If login count is greater than 1, navigate to dashboard
@@ -83,26 +84,29 @@ const SignCompo = () => {
                 }
                 // navigate('/plan')
                 window.location.reload()
-
+                setFormData({
+                    email: '',
+                    password: ''
+                })
+        
             } else {
-
-                toast.error(response.data.error);
+                // console.log("login error",);
+                toast.error(response.data.message);
 
             }
 
-            
+
             // Optionally, you can perform actions like showing a success message or redirecting the user.
         } catch (error) {
-            console.error('Login failed:', error);
+            console.log('Login failed:', error);
             // Optionally, you can handle errors, show error messages, or perform other actions based on the error.
         }
         // toast.success('User Login SuccessFully')
 
-    setFormData({
-      email: "",
-      password: "",
-    });
-  };
+      
+    };
+
+
 
   // const notifyfun = () => {
   //     // toast.success("You Are Successfully Login")

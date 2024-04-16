@@ -149,11 +149,17 @@ const ContactDetails = () => {
 // fetching create contact dropdown data
 
 const [dropdownitems, setDropdownitems] = useState([]);
+// const [dropdownitems, setDropdownitems] = useState([
+//     { label: "address_label", value: "Value 1" },
+//     { label: "assistant_label", value: "Value 2" },
+//     { label: "company_name_label", value: "Value 3" },
+//     // Add more items as needed
+// ]);
 const fetchdropdowndata = async () => {
     try {
         const response = await axios.get(`${createContactFields}`, API_HEADER);
         setDropdownitems(response.data.data);
-        console.log("dropdown data", response.data.data);
+        console.log("dropdown data", response.data);
     } catch (error) {
         console.log("dropdown error",error)
         toast.error(error.response.data.message);
@@ -252,6 +258,9 @@ useEffect(() => {
 
                             }
                         >
+                            <div 
+                            // style={{ overflowX: 'auto'}}
+                            >
                             <Form layout="vertical" >
                                 <Row gutter={16}>
                                     <Col span={24}>
@@ -348,7 +357,7 @@ useEffect(() => {
                                             overlay={
                                                 <Menu>
                                                   {dropdownitems.map((item, index) => (
-                                                    <Menu.Item key={item.key}>{item.label}</Menu.Item>
+                                                    <Menu.Item key={index}>{item.label}</Menu.Item>
                                                   ))}
                                                 </Menu>
                                               }
@@ -365,6 +374,8 @@ useEffect(() => {
                                     </Col>
                                 </Row>
                             </Form>
+                            </div>
+                           
                         </Drawer>
                         {/* end of drawer of create contact */}
 
