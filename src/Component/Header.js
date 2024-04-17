@@ -116,12 +116,20 @@ const Header = () => {
                             <span className="caret" />
                         </a>
                         <div className="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                            <img src={Avatar} className='profileimgright' />
-                            <span className="dropdown-item dropdown-header profilename">{user}<button onClick={logoutbutton}> <img src={logout} /> </button>    </span>
+                           
+                            <div className='d-flex justify-content-between align-items-center mx-2'>
+                                <div className='d-flex gap-0'>
+                                <img src={Avatar} className='profileimgright' />
+                                <p className="dropdown-item dropdown-header profilename">{user}</p>
+                                </div>
+
+                            <button onClick={logoutbutton}> <img src={logout} className='' /> </button>
+                            </div>
+                           
 
                             <div className="dropdown-divider" />
-                            <a href="#" className="dropdown-item"><img src={profile} />        Profile</a>
-                            <Link to="/sender" className="dropdown-item"> <img src={profile} /> Sender Domain IPs</Link>
+                            <a href="#" className="dropdown-item"><img src={profile} />&nbsp; Profile</a>
+                            <Link to="/sender" className="dropdown-item"> <img src={profile} />&nbsp;Sender Domain IPs</Link>
                             <a href="#" className="dropdown-item"> <img src={wallet} /> Select Language</a>
                         </div>
                     </li>

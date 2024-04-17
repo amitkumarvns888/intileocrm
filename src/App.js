@@ -21,10 +21,13 @@ import EmailTemplating from "./Pages/EmailTemplating";
 import UserDashboard from "./Pages/UserDashboard";
 import Test from "./Pages/Test";
 
+import ContactProfile from "./Pages/ContactProfile";
+import YourComponent from "./Pages/testing1";
+
 function App() {
   const loginCount = sessionStorage.getItem("logincount");
   return (
-    // <div class="wrapper">
+    <div class="wrapper">
       <BrowserRouter>
         <Routes>
           <Route path='/' element={<Register />} />
@@ -53,12 +56,15 @@ function App() {
           <Route path="/copy&paste" element={<CopyPaste />} />
           <Route path="/uploadfile" element={<UploadFile />} />
           <Route path="/importexisting" element={<ImportExisting />} />
-          <Route path="/campaignDashboard" element={<CampaignDashboard />} />
+          <Route path="/campaign" element={<CampaignDashboard />} />
           <Route path="/emailtemplating" element={<EmailTemplating />} />
           <Route path="/test" element={<Test />} />
+
+          <Route path="/testing" element={<ContactProfile/>}/>
+          <Route path="/testing1" element={<YourComponent/>}/>
         </Routes>
       </BrowserRouter>
-    // </div>
+   </div>
   );
 }
 

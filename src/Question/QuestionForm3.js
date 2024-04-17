@@ -22,7 +22,7 @@ const QuestionForm3 = () => {
       const response = await axios.get(
         "https://intileo-tech.info/api/admin/question/index"
       );
-      //   console.log(response.data.data);
+        console.log(response.data.data);
       setFormData3(response.data.data.questions);
       //   console.log(formdata3);
       try {
@@ -59,10 +59,11 @@ const QuestionForm3 = () => {
         {
           team_size: selectedOption1,
           contact_size: selectedOption2,
+          question_id:3,
         },
         API_HEADER
       );
-      //   console.log(resp);
+        console.log(resp);
       if (resp.status === 200) {
         toast.success(resp.data.message);
         navigate("/dashboard");

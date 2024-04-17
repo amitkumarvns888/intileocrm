@@ -3,7 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { Table, Form, Input, } from 'antd';
-import { Button, Col, DatePicker, Drawer, Row, Select, Space, Dropdown,Menu } from 'antd';
+import { Button, Col, DatePicker, Drawer, Row, Select, Space, Dropdown, Menu, Checkbox } from 'antd';
 import { CloseCircleOutlined, DownOutlined } from "@ant-design/icons";
 import eyeicon from '../crmimage/Eye.png'
 import editicon from '../crmimage/Edit.png'
@@ -12,7 +12,7 @@ import uploadicon from '../crmimage/upload.png';
 import copypasteicon from '../crmimage/copypaste.png';
 import next from '../crmimage/navigate.png';
 import { Link } from 'react-router-dom';
-import { API_HEADER, fetchContactDataUrl,createContactFields } from '../Config';
+import { API_HEADER, fetchContactDataUrl, createContactFields } from '../Config';
 import Header from '../Component/Header';
 import SideNavbar from '../Component/SideNavbar';
 import Footer from '../Component/Footer';
@@ -146,28 +146,28 @@ const ContactDetails = () => {
     const onCloseImportContact = () => {
         setOpenimport(false);
     }
-// fetching create contact dropdown data
+    // fetching create contact dropdown data
 
-const [dropdownitems, setDropdownitems] = useState([]);
-// const [dropdownitems, setDropdownitems] = useState([
-//     { label: "address_label", value: "Value 1" },
-//     { label: "assistant_label", value: "Value 2" },
-//     { label: "company_name_label", value: "Value 3" },
-//     // Add more items as needed
-// ]);
-const fetchdropdowndata = async () => {
-    try {
-        const response = await axios.get(`${createContactFields}`, API_HEADER);
-        setDropdownitems(response.data.data);
-        console.log("dropdown data", response.data);
-    } catch (error) {
-        console.log("dropdown error",error)
-        toast.error(error.response.data.message);
+    const [dropdownitems, setDropdownitems] = useState([]);
+    // const [dropdownitems, setDropdownitems] = useState([
+    //     { label: "address_label", value: "Value 1" },
+    //     { label: "assistant_label", value: "Value 2" },
+    //     { label: "company_name_label", value: "Value 3" },
+    //     // Add more items as needed
+    // ]);
+    const fetchdropdowndata = async () => {
+        try {
+            const response = await axios.get(`${createContactFields}`, API_HEADER);
+            setDropdownitems(response.data.data);
+            console.log("dropdown data", response.data);
+        } catch (error) {
+            console.log("dropdown error", error)
+            toast.error(error.response.data.message);
+        }
     }
-}
-useEffect(() => {
-    fetchdropdowndata();
-},[]);
+    useEffect(() => {
+        fetchdropdowndata();
+    }, []);
     // table data fetching
     const allData = async () => {
         try {
@@ -206,6 +206,21 @@ useEffect(() => {
     const handleTableChange = (pagination, filters, sorter) => {
         setPagination(pagination);
         // Setloader(true);
+    };
+    const [selectedOptions, setSelectedOptions] = useState([]);
+    // const filteredOptions = OPTIONS.filter((o) => !selectedItems.includes(o));
+    const handleChange = (selected) => {
+        setSelectedOptions(selected);
+    };
+    const [mandatory, setMandatory] = useState(false);
+    const [unique, setUnique] = useState(false);
+
+    const handleCheckboxChange = (e, type) => {
+        if (type === "mandatory") {
+            setMandatory(e.target.checked);
+        } else if (type === "unique") {
+            setUnique(e.target.checked);
+        }
     };
 
     return (
@@ -258,124 +273,164 @@ useEffect(() => {
 
                             }
                         >
-                            <div 
+                            <div
                             // style={{ overflowX: 'auto'}}
                             >
-                            <Form layout="vertical" >
-                                <Row gutter={16}>
-                                    <Col span={24}>
-                                        <Form.Item name="firstname" label={<span style={{ color: '#006D75', fontWeight: 'lighter' }}>First Name</span>}
+                                <Form layout="vertical" >
+                                    <Row gutter={16}>
+                                        <Col span={24}>
+                                            <Form.Item name="firstname" label={<span style={{ color: '#006D75', fontWeight: 'lighter' }}>First Name</span>}
 
-                                            rules={[
-                                                { required: true, message: 'First Name is required' },
-                                                {
-                                                    pattern: /^[&,.\-_\w\s]{1,25}$/,
-                                                    message: 'Please enter a valid First Name (up to 25 characters, only &, , ., -, _ special characters are allowed)'
-                                                }
-                                            ]}
-                                        >
-                                            <Input className="placeholderColor" placeholder="First Name" />
-                                        </Form.Item>
-                                    </Col>
+                                                rules={[
+                                                    { required: true, message: 'First Name is required' },
+                                                    {
+                                                        pattern: /^[&,.\-_\w\s]{1,25}$/,
+                                                        message: 'Please enter a valid First Name (up to 25 characters, only &, , ., -, _ special characters are allowed)'
+                                                    }
+                                                ]}
+                                            >
+                                                <Input className="placeholderColor" placeholder="First Name" />
+                                            </Form.Item>
+                                        </Col>
 
-                                </Row>
-                                <Row gutter={16}>
-                                    <Col span={24}>
-                                        <Form.Item
-                                            name="lastname"
-                                            label={<span style={{ color: '#006D75', fontWeight: 'lighter' }}>Last Name</span>}
-                                            rules={[
-                                                {
-                                                    required: true,
-                                                    message: 'Last Name is required',
-                                                },
-                                                {
-                                                    pattern: /^[&,.\-_\w\s]{1,25}$/,
-                                                    message: 'Please enter a valid Last Name (up to 25 characters, only &, , ., -, _ special characters are allowed)'
-                                                }
-                                            ]}
-                                        >
-                                            <Input
-                                                style={{
-                                                    width: '100%',
-                                                }}
-                                                className="placeholderColor" placeholder="Last Name"
-                                            />
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-                                <Row gutter={16}>
-                                    <Col span={24}>
-                                        <Form.Item name="email" label={<span style={{ color: '#006D75', fontWeight: 'lighter' }}>Email Address (Username)</span>}
-                                            rules={[
-                                                { required: true, message: 'Email is required' },
-                                                { type: 'email', message: 'Invalid email' },
-                                                {
-                                                    pattern: /^[&,.\-_\w\s@]{1,50}$/,
-                                                    message: 'Please enter a valid email (up to 50 characters, only @, &, , ., -, _ special characters are allowed)'
-                                                }
-                                            ]}>
-                                            <Input type="email" placeholder="name@example.com" className="placeholderColor" />
-                                        </Form.Item>
-                                    </Col>
+                                    </Row>
+                                    <Row gutter={16}>
+                                        <Col span={24}>
+                                            <Form.Item
+                                                name="lastname"
+                                                label={<span style={{ color: '#006D75', fontWeight: 'lighter' }}>Last Name</span>}
+                                                rules={[
+                                                    {
+                                                        required: true,
+                                                        message: 'Last Name is required',
+                                                    },
+                                                    {
+                                                        pattern: /^[&,.\-_\w\s]{1,25}$/,
+                                                        message: 'Please enter a valid Last Name (up to 25 characters, only &, , ., -, _ special characters are allowed)'
+                                                    }
+                                                ]}
+                                            >
+                                                <Input
+                                                    style={{
+                                                        width: '100%',
+                                                    }}
+                                                    className="placeholderColor" placeholder="Last Name"
+                                                />
+                                            </Form.Item>
+                                        </Col>
+                                    </Row>
+                                    <Row gutter={16}>
+                                        <Col span={24}>
+                                            <Form.Item name="email" label={<span style={{ color: '#006D75', fontWeight: 'lighter' }}>Email Address (Username)</span>}
+                                                rules={[
+                                                    { required: true, message: 'Email is required' },
+                                                    { type: 'email', message: 'Invalid email' },
+                                                    {
+                                                        pattern: /^[&,.\-_\w\s@]{1,50}$/,
+                                                        message: 'Please enter a valid email (up to 50 characters, only @, &, , ., -, _ special characters are allowed)'
+                                                    }
+                                                ]}>
+                                                <Input type="email" placeholder="name@example.com" className="placeholderColor" />
+                                            </Form.Item>
+                                        </Col>
 
-                                </Row>
+                                    </Row>
 
-                                <Row gutter={16}>
-                                    <Col span={24} >
-                                        <Form.Item name="phone_number" label={<span style={{ color: '#006D75', fontWeight: 'lighter' }}>Phone Number</span>}
-                                            rules={[
-                                                { required: true, message: 'Mobile is required' },
-                                                { pattern: /^[0-9]+$/, message: 'Phone Number must contain only digits' },
-                                                { len: 10, message: 'Phone Number must be exactly 10 digits' },
-                                            ]}
+                                    <Row gutter={16}>
+                                        <Col span={24} >
+                                            <Form.Item name="phone_number" label={<span style={{ color: '#006D75', fontWeight: 'lighter' }}>Phone Number</span>}
+                                                rules={[
+                                                    { required: true, message: 'Mobile is required' },
+                                                    { pattern: /^[0-9]+$/, message: 'Phone Number must contain only digits' },
+                                                    { len: 10, message: 'Phone Number must be exactly 10 digits' },
+                                                ]}
 
-                                        >
-                                            <Input maxLength={10} className="placeholderColor" placeholder="Phone Number" />
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-                                <Row gutter={16}>
-                                    <Col span={24}>
-                                        <Form.Item name="name" label={<span style={{ color: '#006D75', fontWeight: 'lighter' }}>Company Name</span>}
-                                            // style={{color:'#07b6af'}}
-                                            rules={[
-                                                { required: true, message: 'Company Name is required' },
-                                                {
-                                                    pattern: /^[&,.\-_\w\s]{1,50}$/,
-                                                    message: 'Please enter a valid company name (up to 50 characters, only &, , ., -, _ special characters are allowed)'
-                                                }
-                                            ]}
-                                        >
-                                            <Input className="placeholderColor" placeholder="Company Name" />
-                                        </Form.Item>
-                                    </Col>
-                                </Row>
-                                <Row gutter={16}>
-                                    <Col span={24}>
-                                        <Dropdown
-                                            overlay={
-                                                <Menu>
-                                                  {dropdownitems.map((item, index) => (
-                                                    <Menu.Item key={index}>{item.label}</Menu.Item>
-                                                  ))}
-                                                </Menu>
-                                              }
-                                            // overlay={<Menu>{dropdownitems}</Menu>} 
-                                         trigger={['click']}
-                                        >
-                                            <a onClick={(e) => e.preventDefault()}>
-                                                <Space>
-                                                    Select list or category
-                                                    <DownOutlined />
-                                                </Space>
-                                            </a>
-                                        </Dropdown>
-                                    </Col>
-                                </Row>
-                            </Form>
+                                            >
+                                                <Input maxLength={10} className="placeholderColor" placeholder="Phone Number" />
+                                            </Form.Item>
+                                        </Col>
+                                    </Row>
+                                    <Row gutter={16}>
+                                        <Col span={24}>
+                                            <Form.Item name="name" label={<span style={{ color: '#006D75', fontWeight: 'lighter' }}>Company Name</span>}
+                                                // style={{color:'#07b6af'}}
+                                                rules={[
+                                                    { required: true, message: 'Company Name is required' },
+                                                    {
+                                                        pattern: /^[&,.\-_\w\s]{1,50}$/,
+                                                        message: 'Please enter a valid company name (up to 50 characters, only &, , ., -, _ special characters are allowed)'
+                                                    }
+                                                ]}
+                                            >
+                                                <Input className="placeholderColor" placeholder="Company Name" />
+                                            </Form.Item>
+                                        </Col>
+                                    </Row>
+                                    <Row gutter={16}>
+                                        <Col span={24}>
+                                            {selectedOptions.map(option => (
+                                                <div key={option}>
+                                                    <div className="mb-3 d-grid">
+                                                        <label className="text-capitalize fw-light" style={{ color: '#006D75', }} >
+                                                            {mandatory ? <span className="text-danger"> * </span> : null}
+                                                            {option}</label> {/* Render the label with option name */}
+                                                        <Input style={{
+                                                            // margin: '0 1rem',
+                                                            width: '100%'
+                                                        }} placeholder={`${option}`}
+                                                            className="placeholderColor"
+                                                            required={mandatory}
+                                                            />
+                                                       
+                                                        {/* Render different inputs based on selected options */}
+                                                    </div>
+                                                </div>
+                                            ))}
+                                            {/* <br /> */}
+                                            <div className="d-grid">
+                                                <label className="text-capitalize textblue" >select to add more Fields</label>
+                                                <Select
+                                                    mode="multiple"
+                                                    allowClear
+                                                    style={{
+                                                        width: '100%',
+                                                        // margin: '0 1rem',
+                                                    }}
+                                                    placeholder="Add more Fields"
+                                                    onChange={handleChange}
+                                                >
+                                                    {/* options={filteredOptions.map((item) => ({
+                        value: item,
+                        label: item,
+                    }))} */}
+                                                    {/* <Option key="first_name">First Name</Option> */}
+                                                    {/* <Option key="last_name">Last Name</Option> */}
+                                                    <Option key="first_name">
+                                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                                            <span>First Name</span>
+                                                            <div>
+                                                                <Checkbox onChange={(e) => handleCheckboxChange(e, "mandatory")}><span className="text-xs">Mandatory</span></Checkbox>
+                                                                {/* <Checkbox onChange={(e) => handleCheckboxChange(e, "unique")}>Unique</Checkbox> */}
+                                                            </div>
+                                                        </div>
+                                                    </Option>
+                                                    <Option key="last_name" className="">
+                                                        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+                                                            <span>Last Name</span>
+                                                            <div>
+                                                                <Checkbox onChange={(e) => handleCheckboxChange(e, "mandatory")}><span className="text-xs">Mandatory</span></Checkbox>
+                                                                {/* <Checkbox onChange={(e) => handleCheckboxChange(e, "unique")}>Unique</Checkbox> */}
+                                                            </div>
+                                                        </div>
+                                                    </Option>
+                                                    {/* Add more options as needed */}
+                                                </Select>
+                                            </div>
+                                        </Col>
+                                    </Row>
+                                </Form>
                             </div>
-                           
+
                         </Drawer>
                         {/* end of drawer of create contact */}
 
