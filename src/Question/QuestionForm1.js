@@ -12,7 +12,7 @@ const QuestionForm1 = () => {
   const [formdata1, setFormData1] = useState([]);
   const [question1, setQuestion1] = useState([]);
   const [options1, setOptions1] = useState([]);
-  const [selectedOption, setSelectedOption] = useState(null);
+  const [selectedOption, setSelectedOption] = useState("");
 
   useEffect(() => {
     fetchData();
@@ -54,6 +54,7 @@ const QuestionForm1 = () => {
         { answer_id: selectedOption },
         API_HEADER
       );
+      console.log("response for question 1",resp)
       if (resp.status === 200) {
         toast.success(resp.data.message);
         navigate("/onboardQuestion2");
@@ -64,6 +65,7 @@ const QuestionForm1 = () => {
     } catch (err) {
       console.log("question form 1",err);
     }
+
     setSelectedOption(null);
   };
   const handleOptionChange = (e) => {

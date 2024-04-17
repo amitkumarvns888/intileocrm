@@ -29,3 +29,9 @@ export const API_HEADER = {
         "Authorization": "Bearer " + sessionStorage.getItem("token")
     }
 }
+export const API_HEADER_FILE = {
+    headers: {
+        "Content-Type": "multipart/form-data",
+        "Authorization": "Bearer " + sessionStorage.getItem("token")
+    }
+}
