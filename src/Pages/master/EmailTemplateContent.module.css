@@ -1,0 +1,72 @@
+.buttonStyle {
+    margin-top: 1rem;
+    margin-right: 1rem;
+    min-width: 7rem;
+  }
+  .errMsg {
+    color: red;
+    padding-top: 0.5rem;
+  }
+  .inputStyle {
+    min-width: 6rem;
+  }
+  .formDesign {
+    border: 10px solid black;
+  }
+  
+  .cardDiv {
+    background-color: aqua;
+    min-width: 20rem;
+    min-width: 100%;
+  }
+  .buttonDesign {
+    display: flex;
+    justify-content: end;
+    margin-top: 1rem;
+  }
+  .buttonStyle2 {
+    display: flex;
+    align-items: center;
+    justify-content: start;
+    margin-top: 2rem;
+  }
+  
+  #components-form-demo-normal-login .login-form {
+    max-width: 300px;
+  }
+  #components-form-demo-normal-login .login-form-forgot {
+    float: right;
+  }
+  #components-form-demo-normal-login .ant-col-rtl .login-form-forgot {
+    float: left;
+  }
+  .login-form-forgotp {
+    float: right;
+  }
+  #components-form-demo-normal-login .login-form-button {
+    width: 40%;
+  }
+  .login-form-button {
+    width: 100%;
+  }
+  .card {
+    /* width: 65rem; Adjust as needed */
+    min-height: 12rem;
+    background-color: white;
+    margin-top: 1rem;
+  }
+  .mainCard {
+    background-color: #e8eaf6;
+    margin: 0;
+    padding: 0;
+    border-radius: 0;
+  }
+  .customHeader {
+    font-size: 1rem;
+     /* Adjust the font size as needed */
+  }
+  .editor{
+    height: 12rem;
+    background-color: white;
+  }
+  
