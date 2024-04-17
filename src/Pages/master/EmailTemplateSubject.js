@@ -1,5 +1,5 @@
 import { useEffect, useState, useMemo } from "react";
-import styles from "./EmailTemplateContent.module.css";
+import styles from "./EmailTemplateSignature.module.css";
 import axios from "axios";
 import QuillEditor from "react-quill";
 import "react-quill/dist/quill.snow.css";
@@ -28,20 +28,19 @@ import { toast } from "react-toastify";
 import Header from "../../Component/Header";
 import SideNavbar from "../../Component/SideNavbar";
 import Footer from "../../Component/Footer";
-import { render } from "@testing-library/react";
 const { Search } = Input;
 
-const EmailTemplateContent = () => {
-  const [emailTemplatedata, setEmailTemplateData] = useState([]);
+const EmailTemplateSubject = () => {
+  const [emailSubjectdata, setEmailSubjectData] = useState([]);
 
-  const [editTemplateId, setEditTemplateId] = useState(null); // State to track the zone being edited
+  const [editSubjectId, setEditSubjectId] = useState(null); // State to track the zone being edited
   const [search, setSearch] = useState("");
   const [isEditing, setIsEditing] = useState(false);
   const [isAdding, setIsAdding] = useState(false);
   const [sortOrder, setSortOrder] = useState("ASC");
   const [loading, setLoading] = useState(false);
   const [form] = Form.useForm(); // Create a form instance
-  const [editorHtml, setEditorHtml] = useState("");
+  
 
   const [pagination, setPagination] = useState({
     totalRecords: 0,
@@ -76,12 +75,11 @@ const EmailTemplateContent = () => {
     setLoading(true);
     try {
       const response = await axios.get(
-        "https://intileo-tech.info/api/user/email-template/get-list",
-
+        "https://intileo-tech.info/api/user/email-subject/get-list",
         API_HEADER
       );
       console.log(response.data.data.data);
-      setEmailTemplateData(response.data.data.data);
+      setEmailSubjectData(response.data.data.data);
       setLoading(false);
       //   const {
       //     totalRecords,
@@ -109,13 +107,13 @@ const EmailTemplateContent = () => {
   //extracting id for edit
   const handleEdit = (record) => {
     console.log("record to edit", record);
-    const template_body = record.template_body; // Assuming initialValues contains the template_body
-    const textContent = template_body.replace(/<[^>]+>/g, ""); // Extract text content without HTML tags
-    form.setFieldsValue({ template_body: textContent });
+    const template_subject = record.template_subject; // Assuming initialValues contains the template_subject
+    const textContent = template_subject.replace(/<[^>]+>/g, ""); // Extract text content without HTML tags
+    form.setFieldsValue({ template_subject: textContent });
     form.setFieldsValue({
       template_name: record.template_name,
     });
-    setEditTemplateId(record.id); // Set the zone id being edited
+    setEditSubjectId(record.id); // Set the zone id being edited
     setIsEditing(true);
     setIsAdding(false);
     window.scrollTo({
@@ -129,8 +127,8 @@ const EmailTemplateContent = () => {
     setIsAdding(false);
     setIsEditing(false);
     Modal.confirm({
-      title: "Confirm",
-      icon: "",
+      title: "Are you sure you want to delete this record?",
+    //   icon: "",
       centered: true,
       async onOk() {
         try {
@@ -139,7 +137,7 @@ const EmailTemplateContent = () => {
 
             API_HEADER
           );
-          toast.success("Template Deleted!");
+          toast.success("Subject Deleted!");
           fetchAll();
         } catch (error) {
           console.log(error);
@@ -168,7 +166,7 @@ const EmailTemplateContent = () => {
           values,
           API_HEADER
         );
-        toast.success("Template Added!");
+        toast.success("Subject Added!");
       } catch (error) {
         console.log(error);
         toast.error("Failed to add template!");
@@ -178,10 +176,10 @@ const EmailTemplateContent = () => {
       try {
         await axios.post(
           "https://intileo-tech.info/api/user/email-template/update",
-          { ...values, user_email_template_id: editTemplateId },
+          { ...values, user_email_template_id: editSubjectId },
           API_HEADER
         );
-        toast.success("Template Edited!");
+        toast.success("Subject Edited!");
       } catch (error) {
         console.log(error);
         toast.error("Failed to edit template!");
@@ -195,7 +193,7 @@ const EmailTemplateContent = () => {
   };
   const handleReset = () => {
     form.resetFields();
-    setEditTemplateId(null);
+    setEditSubjectId(null);
     setSearch("");
     setIsAdding(false);
     setIsEditing(false); // Reset the form fields
@@ -243,7 +241,7 @@ const EmailTemplateContent = () => {
     {
       title: (
         <div>
-          Template Name
+          Subject Name
           {
             <ArrowUpOutlined
               style={{ marginLeft: 12, fontSize: "1rem" }}
@@ -262,11 +260,11 @@ const EmailTemplateContent = () => {
     {
       title: "Content",
 
-      dataIndex: "template_body",
-      key: "template_body",
+      dataIndex: "template_subject",
+      key: "template_subject",
       // className: styles.customHeader,
       // width: "0%",
-      align: "left",
+      align: "center",
     },
     {
       title: "Action",
@@ -342,7 +340,7 @@ const EmailTemplateContent = () => {
         <div className="content p-0 m-0">
           <div className="container-fluid p-0 m-0">
             <Card className={styles.mainCard}>
-              <h3>Email Template</h3>
+              <h3>Email Subject</h3>
               <Card>
                 <Row justify="end">
                   <Col>
@@ -359,7 +357,7 @@ const EmailTemplateContent = () => {
                               marginRight: "0.5rem",
                             }}
                           />
-                          Add Template
+                          Add Subject
                         </div>
                       </Button>
                     )}
@@ -368,7 +366,7 @@ const EmailTemplateContent = () => {
                 <Row justify="end">
                   <Col>
                     <Search
-                      placeholder="Search Template"
+                      placeholder="Search Subject"
                       onSearch={onSearch}
                       value={search}
                       onChange={(e) => setSearch(e.target.value)}
@@ -383,7 +381,7 @@ const EmailTemplateContent = () => {
                   bordered
                   rowKey={(record) => record.zone_id}
                   columns={columns}
-                  dataSource={emailTemplatedata}
+                  dataSource={emailSubjectdata}
                   size="small"
                   loading={loading}
                   pagination={false}
@@ -420,9 +418,9 @@ const EmailTemplateContent = () => {
                       className={`${styles.card} `}
                     >
                       {isAdding ? (
-                        <h5>Add Template</h5>
+                        <h5>Add Subject</h5>
                       ) : (
-                        <h5>Edit Template</h5>
+                        <h5>Edit Subject</h5>
                       )}
                       <Form
                         colon={false}
@@ -446,19 +444,19 @@ const EmailTemplateContent = () => {
                         style={{ paddingTop: "2rem" }}
                       >
                         <Form.Item
-                          label="Template"
+                          label="Subject"
                           name="template_name"
                           rules={[
                             {
                               required: true,
-                              message: "Please input Template name !",
+                              message: "Please input Subject name !",
                             },
                           ]}
                           //   style={{ maxWidth: "50%" }}
                         >
                           <Input
                             suffix={
-                              <Tooltip title="Please input a valid template name">
+                              <Tooltip title="Please input a valid signature name">
                                 <InfoCircleOutlined
                                   style={{
                                     color: "rgba(0,0,0,.45)",
@@ -466,17 +464,17 @@ const EmailTemplateContent = () => {
                                 />
                               </Tooltip>
                             }
-                            placeholder="Enter Template name"
+                            placeholder="Enter Subject name"
                             style={{ marginLeft: "4" }}
                           />
                         </Form.Item>
                         <Form.Item
                           label="Content"
-                          name="template_body"
+                          name="template_subject"
                           rules={[
                             {
                               required: true,
-                              message: "Please input Template Subject !",
+                              message: "Please input Subject content !",
                             },
                           ]}
                           //   style={{ maxWidth: "50%" }}
@@ -525,4 +523,4 @@ const EmailTemplateContent = () => {
   );
 };
 
-export default EmailTemplateContent;
+export default EmailTemplateSubject;

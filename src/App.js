@@ -22,6 +22,8 @@ import UserDashboard from "./Pages/UserDashboard";
 import CreateEmailTemplating from "./Pages/CreateEmailTemplate";
 import Test from "./Pages/Test";
 import EmailTemplateContent from "./Pages/master/EmailTemplateContent";
+import EmailTemplateSignature from "./Pages/master/EmailTemplateSignature";
+import EmailTemplateSubject from "./Pages/master/EmailTemplateSubject";
 
 function App() {
   const loginCount = sessionStorage.getItem("logincount");
@@ -60,9 +62,14 @@ function App() {
           path="/createemailtemplate"
           element={<CreateEmailTemplating />}
         />
+        <Route path="email/emailtemplate" element={<EmailTemplateContent />} />
         <Route
-          path="email/emailtemplate"
-          element={<EmailTemplateContent />}
+          path="email/emailsignature"
+          element={<EmailTemplateSignature />}
+        />
+        <Route
+          path="email/emailsubject"
+          element={<EmailTemplateSubject />}
         />
         <Route path="/test" element={<Test />} />
       </Routes>
