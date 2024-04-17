@@ -7,7 +7,9 @@ import SideNavbar from "../Component/SideNavbar";
 import { UserbaseUrl, API_HEADER } from "../Config";
 import { ProfileOutlined, RobotOutlined } from "@ant-design/icons";
 import EmailPreview from "../Component/EmailPreview";
-
+// import Header from "../Component/Header"
+import Footer from "../Component/Footer"
+// import SideNavbar from "../Component/SideNavbar";
 import {
   Divider,
   Button as AntButton,
@@ -24,6 +26,7 @@ import {
   Flex,
   Breadcrumb as AntBreadcrumb,
 } from "antd";
+import { eventWrapper } from "@testing-library/user-event/dist/utils";
 const { Option } = Select;
 
 const { TextArea } = Input;
@@ -143,7 +146,13 @@ const EmailTemplating = () => {
     return false;
   };
   return (
-    <div>
+    <>
+    
+    <Header/>
+    <SideNavbar/>
+    <div className="content-wrapper">
+      <div className="content">
+      <div>
       <Row
         align="middle"
         justify="space-between"
@@ -157,7 +166,7 @@ const EmailTemplating = () => {
           >
             <AntBreadcrumb.Item>Home</AntBreadcrumb.Item>
             <AntBreadcrumb.Item>Create</AntBreadcrumb.Item>
-            <AntBreadcrumb.Item>Regular Email</AntBreadcrumb.Item>
+            <AntBreadcrumb.Item>Email Schedule</AntBreadcrumb.Item>
           </AntBreadcrumb>
           <h5>Email Name</h5>
           <p style={{ color: "blue" }}>Edit Name</p>
@@ -378,6 +387,11 @@ const EmailTemplating = () => {
         </AntLayout>
       </AntLayout>
     </div>
+      </div>
+    </div>
+   
+    <Footer/>
+    </>
   );
 };
 
